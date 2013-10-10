@@ -1,0 +1,67 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "http://204.13.82.236:9763/mobileapi/apidoc/docs",
+    "apis": [
+        {
+            "path": "/agenda",
+            "description": "Operations about agenda"
+        },
+        {
+            "path": "/rating",
+            "description": "Operations about average session ratings"
+        },
+        {
+            "path": "/schedule",
+            "description": "Operations about user schedule"
+        },
+        {
+            "path": "/availability",
+            "description": "Operations about user's meeting availability"
+        },
+        {
+            "path": "/meeting",
+            "description": "Operations about user meetings"
+        },
+        {
+            "path": "/attendee",
+            "description": "Operations about user profile"
+        },
+        {
+            "path": "/search",
+            "description": "Search attendees"
+        },
+        {
+            "path": "/sponsors",
+            "description": "Operations about sponsors "
+        },
+        {
+            "path": "/location",
+            "description": "Operations about locations"
+        },
+        {
+            "path": "/session",
+            "description": "Operations about sessions"
+        },
+        {
+            "path": "/notifications",
+            "description": "Operations about notifications"
+        },
+        {
+            "path": "/settings",
+            "description": "Operations about settings"
+        },
+        {
+            "path": "/login",
+            "description": "User login"
+        },
+        {
+            "path": "/message",
+            "description": "User message"
+        },
+        {
+            "path": "/version",
+            "description": "get versions"
+        }
+    ]
+}

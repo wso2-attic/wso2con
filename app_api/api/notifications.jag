@@ -1,0 +1,20 @@
+<%
+
+   include("../logic/notificationLogic.jag");
+
+   var verb = request.getMethod();
+   var user= request.getParameter('user');
+
+   var uri = request.getPathInfo();
+   if(uri != null) {
+      var uriMatcher = new URIMatcher(uri);
+      if(uriMatcher.match("/{user}/{page}")){
+          user=uriMatcher.elements().user;
+      }
+   }
+
+   if(verb=="GET"){
+        getNotifications(user);
+   }
+
+%>

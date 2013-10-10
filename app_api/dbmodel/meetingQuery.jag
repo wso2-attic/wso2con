@@ -1,0 +1,87 @@
+<%
+    include("../db.jag");
+
+    function getMeetingsQuery(user){
+        var result=db.query("SELECT * FROM meeting WHERE (requester=? OR requestee=?)",user,user);
+        return result;
+    }
+
+    function getMeetingQuery(meeting_id){
+        var result=db.query("SELECT * FROM meeting WHERE id=?",meeting_id );
+        return result;
+    }
+
+    function getNotificationsQuery(user){
+        var result=db.query("SELECT meeting.* FROM notification_queue LEFT JOIN meeting ON notification_queue.meeting=meeting.id WHERE notification_queue.user=?",user);
+        return result;
+    }
+
+    function removeNotificationQuery(user){
+        db.query("DELETE FROM notification_queue WHERE user=?",user);
+    }
+
+    function getMeetingsOnSessionQuery(user,session_id){
+        var result=db.query("SELECT id,status FROM meeting WHERE (requestee=? OR requester=?) AND session=?",user,user,session_id);
+        return result;
+    }
+
+    function getRequestedMeetingQuery(user,requestee,session_id){
+        var result=db.query("SELECT id FROM meeting WHERE requester=? AND requestee=? AND session=?",user,requestee,session_id);
+        return result;
+    }
+
+    function updateRequestMessageQuery(meeting_id,msg){
+        db.query("UPDATE meeting SET requestmessage=? WHERE id=?",msg,meeting_id);
+    }
+
+    function updateResponseQuery(meeting_id,msg,status){
+            db.query("UPDATE meeting SET responsemessage=?, status=? WHERE id=?",msg,status,meeting_id);
+        }
+
+    function addNewMeetingQuery(user,requestee, session_id, request_msg){
+        db.query("INSERT INTO meeting (requester, requestee, session, status, requestmessage) VALUES(?,?,?,1,?)",user,requestee,session_id,request_msg);
+    }
+
+    function addNotificationQuery(receiver, meeting_id){
+        db.query("INSERT INTO notification_queue values(?,?)",receiver,meeting_id);
+    }
+
+    function setMeetingLocation(meeting_id, location_id){
+        db.query("UPDATE meeting SET location=? WHERE id=?",location_id,meeting_id);
+    }
+
+    function updateMeetingQuery(meeting_id,notes,send_notes){
+        db.query("UPDATE meeting SET notes=?, sendnotes=? WHERE id=?",notes,send_notes,meeting_id);
+    }
+
+    function setLocationQuery(meeting_id, location_id){
+        db.query("UPDATE meeting SET location=? WHERE id=?", location_id, meeting_id);
+    }
+
+    function getNowPlayingMeetingQuery(user,now){
+        var result=db.query("SELECT meeting.* FROM meeting LEFT JOIN session ON meeting.session=session.id WHERE (meeting.requester=? OR meeting.requestee=?) AND meeting.status=2 AND session.start < ? AND session.end > ?",user,user,now,now);
+        return result;
+    }
+
+    function getUpNextMeetingQuery(user,now){
+        var result=db.query("SELECT meeting.* FROM meeting LEFT JOIN session ON meeting.session=session.id WHERE (meeting.requester=? OR meeting.requestee=?) AND meeting.status=2 AND session.start > ? ORDER BY session.start",user,user,now);
+        return result;
+    }
+
+    function getPendingMeetingsQuery(user){
+        var result=db.query("SELECT * FROM meeting WHERE requestee=? AND status=1");
+        return result;
+    }
+
+    function commitQuery(){
+        //db.commit();
+    }
+
+    function rollbackQuery(){
+        //db.rollback();
+    }
+
+
+
+
+%>

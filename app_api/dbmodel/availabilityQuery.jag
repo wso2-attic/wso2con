@@ -1,0 +1,53 @@
+<%
+    include("../db.jag");
+
+    function getAvailabilityQuery(user){
+        var result=db.query("SELECT session FROM meeting_availability WHERE user=? AND status=1",user);
+        return result;
+    }
+
+    function getMeetingInterests(user){
+        var result=db.query("SELECT interests FROM attendee WHERE id=?",user);
+        return result;
+    }
+
+    function getEntry(user,session){
+        var result=db.query("SELECT * FROM meeting_availability WHERE user=? AND session=?",user,session);
+        return result;
+    }
+
+    function addAvailability(session,user,availability){
+        db.query("INSERT INTO meeting_availability VALUES (?,?,?)",session,user,availability);
+    }
+
+    function updateAvailability(session,user,availability){
+        db.query("UPDATE meeting_availability SET status=? WHERE session=? AND user=?",availability,session,user);
+    }
+
+    function removeAvailability(session,user){
+        db.query("DELETE FROM meeting_availability WHERE session=? AND user=?",session,user);
+    }
+
+    function getRequestedMeetings(session,user){
+        var result=db.query("SELECT id, status FROM meeting WHERE (requester=? OR requestee=?) AND session=? AND (status=1 OR status=2)",user,user,session);
+        return result;
+    }
+
+     function getSessionAvailabilityQuery(user,session){
+        var result=db.query("SELECT * FROM meeting_availability WHERE user=? AND status=1 AND session=?",user,session);     //available means 1
+        return result;
+     }
+
+     function getCommonAvailabilityQuery(requester, requestee){
+         var result=db.query("SELECT a.session FROM meeting_availability AS a LEFT JOIN meeting_availability AS b ON a.session=b.session WHERE a.user=? AND b.user=? AND a.status=1 and b.status=1",requester,requestee);
+         return result;
+     }
+
+     function commitQuery(){
+         //db.commit();
+     }
+
+     function rollbackQuery(){
+         //db.rollback();
+     }
+%>

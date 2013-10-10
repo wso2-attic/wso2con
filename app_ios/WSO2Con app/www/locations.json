@@ -1,0 +1,39 @@
+var locations = {
+    "main": {
+        room: "Victoria"
+    },
+    "T1": {
+        room: "Victoria 1"
+    },
+    "T2": {
+        room: "Victoria 2"
+    },
+    "TT1": {
+        room: "Albert 1"
+    },
+    "TT2": {
+        room: "Albert 2"
+    },
+    "TT3": {
+        room: "Albert 3"
+    },
+    "lobby": {
+        room: "Lobby"
+    },
+    "B1": {
+        room: "Beatrice 1"
+    },
+    "B2": {
+        room: "Beatrice 2"
+    },
+    "B3": {
+        room: "Beatrice"
+    },
+    "tbd": {
+        room: "TBD"
+    },
+    "none": {
+        room: ""
+    }
+
+}

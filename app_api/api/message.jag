@@ -1,0 +1,84 @@
+<%
+include('../logic/messageLogic.jag');
+var id, from, to, message, status, flag;
+var f = new Log();
+
+
+id = request.getParameter('id');
+from = request.getParameter('from');
+to = request.getParameter('to');
+message = request.getParameter('message');
+status = request.getParameter('status');
+
+var uri = request.getPathInfo();
+
+if (uri != null) {
+    var uriMatcher = new URIMatcher(uri);
+    if (uriMatcher.match("/{user}/{page}")) {
+        user = uriMatcher.elements().user;
+        flag = 1;
+    }
+
+    if (uriMatcher.match("/{user}/{page}/{part}")) {
+        user = uriMatcher.elements().user;
+        if(user=='message'){ //this is true during the http PUT method.
+            id = uriMatcher.elements().page;
+            status = uriMatcher.elements().part;
+        }else{
+            var part = uriMatcher.elements().part;
+            if (typeof part === 'number') {
+                id = part;
+                flag = 3;
+            } else if (part == 'from') {
+                flag = 5;
+
+            } else if (part == 'to') {
+                flag = 6;
+
+            } else if (part == 'all') {
+                flag = 7;
+            } else {
+                status = part;
+                flag = 2;
+            }
+        }
+    }
+
+
+    /*   if (uriMatcher.match("/{page}/{id}/{status}")) {
+     id = uriMatcher.elements().id;
+     status = uriMatcher.elements().status;
+     flag = 4;
+     }*/
+}
+
+switch (request.getMethod()) {
+    case 'GET':
+        if (flag == 1) {
+            getMessagesForUser(user.replace('_', '@'));
+        } else if (flag == 2) {
+            getMessagesOnState(user, status);
+        } else if (flag == 3) {
+            getMessage(id)
+        } else if (flag == 5) {
+            getMessagesFromUser(user);
+        } else if (flag == 6) {
+            getMessagesForUser(user.replace('_', '@'));
+        } else if (flag == 7) {
+            getAllMessages(user);
+        }
+        break;
+    case 'POST':
+        addMessage(user, to, message, status);
+        break;
+    case 'PUT':
+        updateMessageStatus(id, status);
+        break;
+    case 'DELETE':
+        deleteMessage(id);
+        break;
+}
+
+
+
+%>

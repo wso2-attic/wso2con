@@ -1,0 +1,114 @@
+<%
+
+include("../dbmodel/attendeeQuery.jag");
+include("../dbmodel/sponsorQuery.jag")
+
+function getProfile(user) {
+    var profile = getProfileQuery(user);
+    var sponsorFollowUp = getSponsorFollowUpQuery(user);
+    var stringProfile = stringify(profile);
+    var resultJson = {};
+    if (profile != null && stringProfile != "[]") {
+        resultJson.id = user;
+        resultJson.firstname = profile[0].firstname;
+        resultJson.lastname = profile[0].lastname;
+        resultJson.email = profile[0].email;
+        resultJson.title = profile[0].title;
+        resultJson.organisation = profile[0].organisation;
+        resultJson.expertise = profile[0].expertise;
+        resultJson.bio = profile[0].bio;
+        resultJson.home = profile[0].home;
+        resultJson.interests = profile[0].interests;
+        resultJson.regcode = profile[0].regcode;
+        resultJson.accepting = !!(profile[0].accepting == 1);
+        var sponsorArray = [];
+        if (sponsorFollowUp != null) {
+            for (i = 0; i < sponsorFollowUp.length; i++) {
+                var sponsorId = sponsorFollowUp[i].sponsor;
+                sponsorArray.push(sponsorId);
+            }
+        }
+        resultJson.sponsors = sponsorArray;
+        print(resultJson);
+    } else {
+        response.sendError(404);
+    }
+
+
+}
+
+function updateProfile(user, first_name, last_name, email, title, organisation, bio, expertise, home_location, meeting_interests, sponsors, reg_code, accepting) {
+    var profile = getProfileQuery(user);
+    var stringProfile = stringify(profile);
+    if (profile != null && stringProfile != "[]") {
+        updateProfileQuery(user, first_name, last_name, email, title, organisation, bio, expertise, home_location, meeting_interests, reg_code, accepting);
+        deleteSponsorFollowUpsQuery(user);
+        if (sponsors != null) {
+            var jsonSponsors = parse(sponsors);
+            if (jsonSponsors != null) {
+                for (i = 0; i < jsonSponsors.length; i++) {
+                    var sponsorId = jsonSponsors[i];
+                    var sponsor = getSponsorQuery(sponsorId);
+                    var sponsorString = stringify(sponsor);
+                    if (sponsorString != "[]") {
+                        addSponsorFollowUpQuery(user, sponsorId);
+                    } else {
+                        rollbackQuery();
+                        response.sendError(404);
+                    }
+                }
+            }
+        }
+        commitQuery();
+        var result = '{"id":' + user + '}';
+        print(parse(result));
+    } else {
+        response.sendError(404);
+    }
+
+}
+
+function addProfile(user, first_name, last_name, email, title, organisation, bio, expertise, home_location, meeting_interests, sponsors, reg_code, accepting) {
+    var profile = getProfileQuery(user);
+    var stringProfile = stringify(profile);
+    if (profile == null || stringProfile == "[]") {
+        addProfileQuery(user, first_name, last_name, email, title, organisation, bio, expertise, home_location, meeting_interests, reg_code, accepting);
+        if (sponsors != null) {
+            var jsonSponsors = parse(sponsors);
+            for (i = 0; i < jsonSponsors.length; i++) {
+                var sponsorId = jsonSponsors[i];
+                var sponsor = getSponsorQuery(sponsorId);
+                var sponsorString = stringify(sponsor);
+                if (sponsorString != "[]") {
+                    addSponsorFollowUpQuery(user, sponsorId);
+                } else {
+                    rollbackQuery();
+                    response.sendError(404);
+                }
+            }
+        }
+        commitQuery();
+        var result = '{"id":' + user + '}';
+        print(parse(result));
+    } else {
+        var errorString = '{"error":"username_not_available"}';
+        print(parse(errorString));
+    }
+
+}
+
+function deleteAttendee(id) {
+    var profile = getProfileQuery(user);
+    var stringProfile = stringify(profile);
+    if (stringProfile != "[]") {
+        deleteSponsorFollowUpsQuery(id);
+        removeAttendeeQuery(id);
+        commitQuery();
+    } else {
+        response.sendError();
+    }
+
+}
+
+
+%>

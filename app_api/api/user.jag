@@ -1,0 +1,43 @@
+<%
+
+include("../logic/userLogic.jag");
+
+var verb = request.getMethod();
+var user = request.getParameter('id');
+var first_name = request.getParameter('firstname');
+var last_name = request.getParameter('lastname');
+var email = request.getParameter('email');
+var title = request.getParameter('title');
+var organisation = request.getParameter('organisation');
+var bio = request.getParameter('bio');
+var expertise = request.getParameter('expertise');
+var home_location = request.getParameter('home');
+var meeting_interests = request.getParameter('interests');
+var reg_code = request.getParameter('regcode');
+var accepting = (request.getParameter('accepting') == "true") ? 1 : 0;
+var sponsors = request.getParameter('sponsors');
+
+var uri = request.getPathInfo();
+if (uri != null) {
+    var uriMatcher = new URIMatcher(uri);
+    if (uriMatcher.match("/{page}/{user}")) {
+        user = uriMatcher.elements().user;
+    }
+}
+
+if (verb == "GET") {
+    getProfile(user);
+} else if (verb == "PUT") {
+    if (request.getContent() != "") {
+        var data = parse(request.getContent());
+        updateProfile(data.id, data.firstname, data.lastname, data.email, data.title, data.organisation, data.bio, data.expertise, data.home, data.interests, stringify(data.sponsors), data.regcode, data.accepting);
+    } else {
+        updateProfile(user, first_name, last_name, email, title, organisation, bio, expertise, home_location, meeting_interests, sponsors, reg_code, accepting);
+    }
+} else if (verb == "POST") {
+    addProfile(user, first_name, last_name, email, title, organisation, bio, expertise, home_location, meeting_interests, sponsors, reg_code, accepting);
+} else if (verb == "DELETE") {
+    deleteAttendee(user);
+}
+
+%>

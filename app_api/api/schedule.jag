@@ -1,0 +1,30 @@
+<%
+
+include("../logic/scheduleLogic.jag");
+
+var verb = request.getMethod();
+var userId = request.getParameter('user');
+var attending = request.getParameter('attending');
+var sessionId = request.getParameter('session');
+var notes = request.getParameter('notes');
+var content_rating = request.getParameter('contentrating');
+var speaker_rating = request.getParameter('speakerrating');
+var feedback = request.getParameter('feedback');
+
+var uri = request.getPathInfo();
+if (uri != null) {
+    var uriMatcher = new URIMatcher(uri);
+    if (uriMatcher.match("/{user}/{page}")) {
+        userId = uriMatcher.elements().user;
+    }
+}
+
+if (verb == "GET") {
+    getSchedule(userId);
+} else if (verb == "PUT") {
+    var data = parse(request.getContent());
+    updateSchedule(userId, data.session, data.attending, data.notes, data.contentrating, data.speakerrating, data.feedback);
+} else if (verb == "POST") {
+    addToSchedule(userId, sessionId, attending, notes, content_rating, speaker_rating, feedback);
+}
+%>

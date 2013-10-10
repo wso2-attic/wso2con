@@ -1,0 +1,75 @@
+<%
+    include("../db.jag");
+
+    function getFullAgenda(){
+        var result=db.query("SELECT agenda FROM agenda");
+        return result;
+    }
+
+    function getSpeakerQuery(session_id){
+        var result=db.query("SELECT speaker FROM session_speaker WHERE session=?",session_id);
+        return result;
+    }
+
+    function getAvgContentRatingQuery(session_id){
+        var result=db.query("SELECT AVG(contentrating) FROM schedule WHERE session=? AND contentrating>0",session_id);
+        return result;
+    }
+
+    function getAvgSpeakerRatingQuery(session_id){
+        var result=db.query("SELECT AVG(speakerrating) FROM schedule WHERE session=? AND speakerrating>0",session_id);
+        return result;
+    }
+
+    function addSessionQuery(type,title,session_abstract,start_time,end_time,location_id,feedback){
+        db.query("INSERT INTO session(type,title,abstract,start,end,location,feedback) VALUES(?,?,?,?,?,?,?)",type,title,session_abstract,start_time,
+        end_time,location_id,feedback);
+     }
+
+    function addSpeakerQuery(session_id, speaker){
+        db.query("INSERT INTO session_speaker VALUES(?,?)",session_id,speaker);
+    }
+
+    function updateSessionQuery(session_id,type,title,session_abstract,start_time,end_time,location_id,feedback){
+        db.query("UPDATE session SET type=?, title=?, abstract=?, start=?, end=?, location=?, feedback=? WHERE id=?",type,title,session_abstract,start_time,end_time,location_id,feedback,session_id);
+    }
+
+    function deleteSessionQuery(session_id){
+        db.query("DELETE FROM session WHERE id=?",session_id);
+    }
+
+    function deleteAllSpeakersQuery(session_id){
+        db.query("DELETE FROM session_speaker WHERE session=?", session_id);
+    }
+
+    function getSessionQuery(session_id){
+        var result=db.query("SELECT * FROM session WHERE id=?",session_id);
+        return result;
+    }
+
+    function getLastSessionEntry(){
+        var result=db.query("SELECT id FROM session ORDER BY id DESC LIMIT 1");
+        return result;
+    }
+
+    function getNowPlayingSessionQuery(now){
+        var result=db.query("SELECT * FROM session WHERE start < ? AND end > ?",now,now);
+        return result;
+    }
+
+    function getUpNextSessionQuery(now){
+        var result=db.query("SELECT * FROM session WHERE start > ? ORDER BY start", now);
+        return result;
+    }
+
+    function commitQuery(){
+       // db.commit();
+    }
+
+    function rollbackQuery(){
+        //db.rollback();
+    }
+
+
+
+%>

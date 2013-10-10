@@ -1,0 +1,48 @@
+<%
+
+   include("../dbmodel/meetingQuery.jag");
+   include("../dbmodel/attendeeQuery.jag");
+
+   function getNotifications(user){
+        var notifications=getNotificationsQuery(user);
+        var stringNotifications=stringify(notifications);
+        if(stringNotifications!="[]"){
+            for(i=0;i<notifications.length;i++){
+                if(notifications[i].STATUS==1){
+                    notifications[i].STATUS="pending";
+                }else if(notifications[i].STATUS==2){
+                    notifications[i].STATUS="accepted";
+                }else if(notifications[i].STATUS==3){
+                    notifications[i].STATUS="declined";
+                }else if(notifications[i].STATUS==4){
+                    notifications[i].STATUS="cancelled";
+                }
+
+                if(notifications[i].SENDNOTES==0){
+                    notifications[i].SENDNOTES="no";
+                }else if(notifications[i].SENDNOTES==1){
+                    notifications[i].SENDNOTES="yes";
+                }else if(notifications[i].SENDNOTES==2){
+                    notifications[i].SENDNOTES="sent";
+                }
+            }
+            var notificationString=stringify(notifications);
+            var result=parse('{"meetings":'+notificationString.toLowerCase()+'}');
+            removeNotificationQuery(user);
+            commitQuery();
+            print(result);
+        }else{
+            var userId=getProfileQuery(user);
+            var stringUser=stringify(userId);
+            if(stringUser=="[]"){
+                response.sendError(404);
+            }else{
+                var result=parse('{"meetings":[]}');
+                print(result);
+
+            }
+        }
+
+   }
+
+%>

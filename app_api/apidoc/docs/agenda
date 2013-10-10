@@ -1,0 +1,64 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/agenda",
+    "apis": [
+        {
+            "path": "/api/agenda",
+            "decription": "Operations about agenda",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getCompleteAgenda",
+                    "responseClass": "List[Session]",
+                    "parameters": [],
+                    "summary": "Get the complete schedule",
+                    "notes": "Details of each session will be given ",
+                    "errorResponses": []
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Session": {
+            "id": "Session",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                },
+                "type": {
+                    "type": "String",
+                    "allowableValues": {
+                        "valueType": "LIST",
+                        "values": [
+                            "keynote",
+                            "session",
+                            "event",
+                            "break",
+                            "available"
+                        ]
+                    }
+                },
+                "title": {
+                    "type": "String"
+                },
+                "speaker": {
+                    "type": "String"
+                },
+                "abstract": {
+                    "type": "String"
+                },
+                "start": {
+                    "type": "Date"
+                },
+                "end": {
+                    "type": "Date"
+                },
+                "location": {
+                    "type": "Int"
+                }
+            }
+        }
+    }
+}

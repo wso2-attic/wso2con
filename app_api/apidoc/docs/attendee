@@ -1,0 +1,305 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/attendee",
+    "apis": [
+        {
+            "path": "/api/attendee",
+            "description": "Operations on attendees",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "nickname": "addProfile",
+                    "responseClass": "AttendeeId",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "firstname",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "lastname",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "email",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "title",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "organisation",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "expertise",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false
+                        },
+                        {
+                            "name": "bio",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false,
+                            "description": "Optional except for speakers"
+                        },
+                        {
+                            "name": "home",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false,
+                            "description": "Home location"
+                        },
+                        {
+                            "name": "regcode",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "interests",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false,
+                            "description": "Meeting interests"
+                        },
+                        {
+                            "name": "accepting",
+                            "paramType": "query",
+                            "dataType": "boolean",
+                            "required": false,
+                            "description": "accepting"
+                        },
+                        {
+                            "name": "sponsors",
+                            "paramType": "query",
+                            "dataType": "Array[Int]",
+                            "required": false,
+                            "description": "Sponsor follow up"
+                        }
+                    ],
+                    "summary": "Register a new profile",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "Sponsor not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/attendee/{id}",
+            "description": "Operations on attendees",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getProfile",
+                    "responseClass": "Attendee",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get user profile",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "User not found"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "PUT",
+                    "nickname": "updateProfile",
+                    "responseClass": "AttendeeId",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "firstname",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "lastname",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "email",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "title",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "organisation",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "expertise",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false
+                        },
+                        {
+                            "name": "bio",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false,
+                            "description": "Optional except for speakers"
+                        },
+                        {
+                            "name": "home",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false,
+                            "description": "Home location"
+                        },
+                        {
+                            "name": "regcode",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "interests",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false,
+                            "description": "Meeting interests"
+                        },
+                        {
+                            "name": "accepting",
+                            "paramType": "query",
+                            "dataType": "boolean",
+                            "required": false,
+                            "description": "accepting"
+                        },
+                        {
+                            "name": "sponsors",
+                            "paramType": "query",
+                            "dataType": "Array[Int]",
+                            "required": false,
+                            "description": "Sponsor follow up"
+                        }
+                    ],
+                    "summary": "Update user profile",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "User not found, Sponsor not found"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "DELETE",
+                    "nickname": "deleteProfile",
+                    "responseClass": "void",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Delete user profile",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "User not found"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Attendee": {
+            "id": "Attendee",
+            "properties": {
+                "id": {
+                    "type": "String"
+                },
+                "firstname": {
+                    "type": "String"
+                },
+                "lastname": {
+                    "type": "String"
+                },
+                "email": {
+                    "type": "String"
+                },
+                "title": {
+                    "type": "String"
+                },
+                "organisation": {
+                    "type": "String"
+                },
+                "expertise": {
+                    "type": "String"
+                },
+                "bio": {
+                    "type": "String"
+                },
+                "home": {
+                    "type": "String"
+                },
+                "interests": {
+                    "type": "String"
+                },
+                "regcode": {
+                    "type": "String"
+                },
+                "sponsors": {
+                    "type": "Array[Int]"
+                }
+            }
+        },
+        "AttendeeId": {
+            "id": "AttendeeId",
+            "properties": {
+                "id": {
+                    "type": "String"
+                }
+            }
+        }
+    }
+}

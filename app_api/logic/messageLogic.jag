@@ -1,0 +1,56 @@
+<%
+
+include("../dbmodel/messageQuery.jag");
+include("../dbmodel/attendeeQuery.jag");
+
+var getMessagesOnState = function (user, status) {
+    print(getMessagesOnStateQuery(user, status));
+};
+
+var getMessagesForUser = function (user) {
+    var messages = getMessagesForUserQuery(user);
+    for(var m in messages){
+        var fromuser = getProfileQuery(messages[m].from_user)[0];
+        messages[m].from_user = fromuser;
+        var toUser = getProfileQuery(messages[m].to_user)[0];
+        messages[m].to_user = toUser;
+    }
+    print(messages);
+};
+
+var getMessagesFromUser = function (user) {
+    var messages = getMessagesFromUserQuery(user);
+    for(var m in messages){
+        var fromuser = getProfileQuery(messages[m].from_user)[0];
+        messages[m].from_user = fromuser;
+        var toUser = getProfileQuery(messages[m].to_user)[0];
+        messages[m].to_user = toUser;
+    }
+    print(messages);
+};
+
+var getAllMessages = function (user) {
+    var messages = getAllMessagesQuery(user);
+    for(var m in messages){
+        var fromuser = getProfileQuery(messages[m].from_user)[0];
+        messages[m].from_user = fromuser;
+        var toUser = getProfileQuery(messages[m].to_user)[0];
+        messages[m].to_user = toUser;
+    }
+    print(messages);
+};
+
+var getMessage = function (id) {
+    print(getMessageQuery(id));
+};
+var addMessage = function (from, to, message, status) {
+    addMessageQuery(from, to, message, status);
+};
+var updateMessageStatus = function (id, status) {
+    updateMessageStatusQuery(id, status);
+};
+var deleteMessage = function (id) {
+    deleteMessageQuery(id);
+};
+
+%>

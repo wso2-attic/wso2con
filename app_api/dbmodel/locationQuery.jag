@@ -1,0 +1,34 @@
+<%
+    include("../db.jag");
+
+    function getLocationQuery(id){
+        var result=db.query("SELECT * FROM location WHERE id=?",id);
+        return result;
+    }
+
+    function addLocationQuery(name,coords){
+        db.query("INSERT INTO location(name,coords) VALUES(?,?)",name,coords);
+    }
+
+    function getLastLocationEntry(){
+        var result=db.query("SELECT id FROM location ORDER BY id DESC LIMIT 1");
+        return result;
+    }
+
+    function updateLocationQuery(location_id,name,coords){
+        db.query("UPDATE location SET name=?, coords=? WHERE id=?",name,coords,location_id);
+    }
+
+    function deleteLocationQuery(location_id){
+        db.query("DELETE FROM location WHERE id=?",location_id);
+    }
+
+    function commitQuery(){
+        //db.commit();
+    }
+
+    function rollbackQuery(){
+        //db.rollback();
+    }
+
+%>

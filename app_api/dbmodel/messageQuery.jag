@@ -1,0 +1,51 @@
+<%
+include("../db.jag");
+
+var getMessagesOnStateQuery = function (user, status) {
+    return db.query("SELECT * FROM message_queue WHERE to_user = ? AND status = ?", user, status);
+};
+
+var getMessagesForUserQuery = function (user) {
+    var result;
+    if (user) {
+        result = db.query("SELECT * FROM message_queue WHERE (to_user = ?)", user);
+    }
+    return result;
+};
+
+var getMessagesFromUserQuery = function (user) {
+    var result;
+    if (user) {
+        result = db.query("SELECT * FROM message_queue WHERE (from_user = ?)", user);
+    }
+    return result;
+};
+
+var getAllMessagesQuery = function (user) {
+    var result;
+    if (user) {
+        result = db.query("SELECT * FROM message_queue WHERE (from_user = ? OR to_user = ?)", user, user);
+    }
+    return result;
+};
+
+var getMessageQuery = function (id) {
+    var result = db.query("SELECT * FROM message_queue WHERE (id = ?)", id);
+};
+var addMessageQuery = function (from, to, message, status) {
+
+    db.query("INSERT INTO message_queue(from_user,to_user,message,status, timestamp) VALUES(?,?,?,?,?)", from, to, message, 'new', (new Date()).toString());
+
+};
+var updateMessageQuery = function (id, from, to, message, status) {
+    db.query("UPDATE message_queue SET from_user=?, to_user=?, message=?, status=?, timestamp=?", from, to, message, status, (new Date()).toString());
+
+};
+
+var updateMessageStatusQuery = function (id, status) {
+    db.query("UPDATE message_queue SET status=? WHERE id = ?", status, id);
+};
+var deleteMessageQuery = function (id) {
+    db.query("DELETE FROM message_queue WHERE id=?", id);
+};
+%>

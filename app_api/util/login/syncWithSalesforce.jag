@@ -1,0 +1,109 @@
+<%
+
+include("salesforcelogin.jag");
+include("profiles.json");
+
+function campaignMembers(campaignId) {
+    var wso2conAPI = "--ADD HERE--";
+    //var wso2conAPI = "http://localhost:9763/mobileapi/api/";
+    var apiKey = "?api_key=special-key";
+    var login = salesforceLogin();
+
+    salesforce.open(login.options, login.serverUrl, false);
+    salesforce.send(
+            <tns:query xmlns:tns="urn:enterprise.soap.sforce.com">
+                <queryString>SELECT LeadId, Registration_status__c FROM CampaignMember WHERE CampaignId='{campaignId}'</queryString>
+            </tns:query>
+    );
+    var queryResponse = salesforce.responseE4X;
+
+    var users = new Array();
+    
+    var l = new Log();
+    var recordCount = queryResponse.ns::result.ns::records.length();
+    var cursor = 0;
+    
+    while (cursor < recordCount) {
+    	
+    	var where = "";
+        for (var i = cursor; i < Math.min(cursor+100, recordCount-1); i++) {
+	    	var r = queryResponse.ns::result.ns::records[i];
+	        if (r.sf::Registration_status__c.toString() == "Registered") {
+	            where += "OR Id='" + r.sf::LeadId.toString() + "' ";
+	        }
+	    }
+	    where = where.substring(3);
+	    
+	    salesforce.open(login.options, login.serverUrl, false);
+	    salesforce.send(
+	            <tns:query xmlns:tns="urn:enterprise.soap.sforce.com">
+	                <queryString>SELECT Id, Email, FirstName, LastName, Title, Company, City, State, Country, Promo_Code__c FROM Lead WHERE {where}</queryString>
+	            </tns:query>
+	    );
+	    var queryResponse1 = salesforce.responseE4X;
+	
+	    for each (var r in queryResponse1.ns::result.ns::records)
+	    {
+	        var home = [];
+	        if (r.sf::City.toString() != "") home.push(r.sf::City.toString());
+	        if (r.sf::State.toString() != "") home.push(r.sf::State.toString())
+	        if (r.sf::Country.toString() != "") home.push(r.sf::Country.toString())
+	        users.push({
+	            id: r.sf::Id.toString().replace("00QE000000", ""),
+	            email: r.sf::Email.toString(),
+	            firstname: r.sf::FirstName.toString(),
+	            lastname: r.sf::LastName.toString(),
+	            title: r.sf::Title.toString(),
+	            organisation: r.sf::Company.toString(),
+	            home: home.join(", "),
+	            regcode: r.sf::Promo_Code__c.toString(),
+	            accepting: (r.sf::Email.toString().indexOf("@wso2.com")>0 ? 1 : 0)
+	        });
+	    }
+	    
+	    cursor += 100;
+    }
+    
+    l.info("Imported users from SF");
+    for (var u in users) {
+        var user = users[u];
+        for (var p in baseprofiles.profiles) {
+            var profile = baseprofiles.profiles[p];
+            if (profile.firstname.charAt(0) == user.firstname.charAt(0) && profile.lastname == user.lastname) {
+            	l.info(user.firstname + " " + user.lastname + " (augmented bio)");
+            	user.bio = profile.bio;
+                user.interests = profile.interests;
+                user.expertise = profile.expertise;
+                break;
+            }
+    	}
+        
+        var result = post(wso2conAPI + "attendee" + apiKey, user);
+        try {
+        	var data = parse(result.data);
+		    if (data.error == "username_not_available") {
+		        result = put(wso2conAPI + "attendee/" + user.id + apiKey, stringify(user));
+		        try {
+		            data = parse(result.data);
+		            l.info(user.firstname + " " + user.lastname + " (update: " + data.id + ")");
+		        } catch (e) {
+		            l.info(user.firstname + " " + user.lastname + " (update error: " + result.data + ")");
+		        }
+		    } else {
+	            l.info(user.firstname + " " + user.lastname + " (insert: " + data.id + ")");
+		    }
+        } catch (e) {
+            l.info(user.firstname + " " + user.lastname + " (insert error: " + result.data + ")");
+        }
+        //if (user.email == "jonathan@wso2.com") break;
+
+        }
+    
+    print(users);
+
+}
+
+var wso2Con2013salesforceId = "--ADD HERE--";
+
+campaignMembers(wso2Con2013salesforceId);
+%>

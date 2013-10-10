@@ -1,0 +1,39 @@
+<%
+    include("../logic/sessionLogic.jag");
+
+    var verb= request.getMethod();
+    var id = request.getParameter('id');
+    var type= request.getParameter('type');
+    var title = request.getParameter('title');
+    var speaker = request.getParameter('speaker');
+    var session_abstract = request.getParameter('abstract');
+    var start = request.getParameter('start');
+    var end = request.getParameter('end');
+    var location = request.getParameter('location');
+    var feedback = request.getParameter('feedback');
+    var current_time =request.getParameter('now');
+
+    var uri = request.getPathInfo();
+    if(uri != null) {
+    var uriMatcher = new URIMatcher(uri);
+        if(uriMatcher.match("/{page}/{id}")){
+            id=uriMatcher.elements().id;
+        }
+    }
+
+    if(verb=="GET" && id=="nowplaying"){
+        getNowPlayingSession(current_time);
+    }else if(verb=="GET" && id=="upnext"){
+        getUpNextSession(current_time);
+    }else if(verb=="GET"){
+        getSession(id);
+    }else if(verb=="POST" && id==null){
+        addSession(type,title,speaker,session_abstract,start,end,location,feedback);
+    }else if(verb=="PUT" && id!=null){
+        updateSession(id,type,title,speaker,session_abstract,start,end,location,feedback);
+    }else if(verb=="DELETE"){
+        deleteSession(id);
+    }
+
+
+%>

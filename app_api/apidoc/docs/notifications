@@ -1,0 +1,87 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/<user>/notifications",
+    "apis": [
+        {
+            "path": "/api/{user}/notifications",
+            "description": "Operations about user's meeting notifications",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getAllNotifications",
+                    "responseClass": "List[Meeting]",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user whose notifications need to be fetched",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get user's all meeting notifications",
+                    "notes": "Returns details of a user's meeting requests",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "User not found"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Meeting": {
+            "id": "Meeting",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                },
+                "user": {
+                    "type": "String"
+                },
+                "session": {
+                    "type": "Int"
+                },
+                "status": {
+                    "type": "String",
+                    "allowableValues": {
+                        "valueType": "LIST",
+                        "values": [
+                            "pending",
+                            "accepted",
+                            "declined",
+                            "cancelled"
+                        ]
+                    }
+                },
+                "requestMessage": {
+                    "type": "String"
+                },
+                "responseMessage": {
+                    "type": "String"
+                },
+                "location": {
+                    "type": "Int"
+                },
+                "notes": {
+                    "type": "String"
+                },
+                "sendnotes": {
+                    "type": "String",
+                    "allowableValues": {
+                        "valueType": "LIST",
+                        "values": [
+                            "yes",
+                            "no",
+                            "sent"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

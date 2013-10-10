@@ -1,0 +1,116 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/settings",
+    "apis": [
+        {
+            "path": "/api/settings",
+            "decription": "Operations about settings",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "nickname": "addOTId",
+                    "responseClass": "void",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "otid",
+                            "paramType": "query",
+                            "description": "OT id of the user",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Add user's OT id",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "User not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/settings/{id}",
+            "decription": "Operations about settings",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getOTId",
+                    "responseClass": "String",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "user id",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get user's OT id",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "Entry not found for the user"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "PUT",
+                    "nickname": "updateOTid",
+                    "responseClass": "void",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "otid",
+                            "paramType": "query",
+                            "description": "User's OT id",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Update user's OT id",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "Entry not found for the user"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "DELETE",
+                    "nickname": "deleteEntry",
+                    "responseClass": "void",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "User Id",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Delete entry",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "Entry not found for the user"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

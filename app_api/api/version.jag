@@ -1,0 +1,10 @@
+<%
+
+include("../logic/versionLogic.jag");
+
+var verb = request.getMethod();
+
+if(verb=="GET"){
+    getVersions();
+}
+%>

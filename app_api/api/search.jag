@@ -1,0 +1,17 @@
+<%
+
+    include("../logic/searchLogic.jag");
+
+    var verb = request.getMethod();
+    var name = request.getParameter('name');
+    var organisation= request.getParameter('organisation');
+    var expertise=request.getParameter('expertise');
+    var home_location=request.getParameter('home');
+    var meeting_interests=request.getParameter('interests');
+    var regcode=request.getParameter('regcode');
+
+    if(verb=="PUT"){
+        searchUsers(name,organisation,expertise,home_location,meeting_interests,regcode);
+    }
+
+%>

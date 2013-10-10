@@ -1,0 +1,96 @@
+<%
+include("../dbmodel/availabilityQuery.jag");
+include("../dbmodel/attendeeQuery.jag");
+
+function getMeetingAvailability(userId) {
+    var sessions = getAvailabilityQuery(userId);
+    var interests = getMeetinginterests(userId);
+    var jsonResult = {};
+    var sessionString = stringify(sessions);
+    if (sessionString != "[]") {
+        jsonResult.user = userId;
+        jsonResult.interests = interests[0].interests;
+        var sessionArray = [];
+        for (i = 0; i < sessions.length; i++) {
+            var sessionId = sessions[i].session;
+            sessionArray.push(sessionId);
+        }
+        jsonResult.meetings = sessionArray;
+        print(jsonResult);
+    } else {
+        var user = getProfileQuery(userId);
+        var stringUser = stringify(user);
+        if (stringUser == "[]") {
+            response.sendError(404);
+        } else {
+            jsonResult.user = userId;
+            jsonResult.interests = interests[0].interests;
+            jsonResult.meetings = [];
+            print(jsonResult);
+        }
+    }
+}
+
+function updateMeetingAvailability(userId, sessionId, status) {
+    var record = getEntry(userId, sessionId);
+    var meetings = getRequestedMeetings(sessionId, userId);
+    var recordString = stringify(record);
+    var meetingString = stringify(meetings);
+    if (status == "unavailable") {
+        if (recordString != "[]" && meetingString != "[]") {
+            for (i = 0; i < meetings.length; i++) {
+                if (meetings[i].STATUS == 1) {
+                    meetings[i].STATUS = "pending"
+                } else if (meetings[i].STATUS == 2) {
+                    meetings[i].STATUS = "accepted";
+                }
+            }
+            var meetingString = stringify(meetings);
+            print('{"errors":' + meetingString + '}');
+        } else if (recordString != "[]" && meetingString == "[]") {
+            updateAvailability(sessionId, userId, 0);
+            commitQuery();
+        } else {
+            print('{"error":"user is currently not available in the given session"');
+        }
+    } else if (status == "available" && recordString == "[]") {
+        var user = getProfileQuery(userId);
+        var stringUser = stringify(user);
+        if (stringUser != "[]") {
+            addAvailability(sessionId, userId, 1);
+            commitQuery();
+        } else {
+            response.sendError(404);
+        }
+    }
+}
+
+function getCommonAvailability(requester, requestee) {
+    var cAvailabilities = getCommonAvailabilityQuery(requester, requestee);
+    var stringAvailability = stringify(cAvailabilities);
+    var jsonResult = {};
+    if (stringAvailability != "[]") {
+        jsonResult.requestee = requestee;
+        var sessionArray = [];
+        for (i = 0; i < cAvailabilities.length; i++) {
+            var slot = cAvailabilities[i].session;
+            sessionArray.push(slot);
+        }
+        jsonResult.sessions = sessionArray;
+        print(jsonResult);
+    } else {
+        var user1 = getProfileQuery(requestee);
+        var stringUser1 = stringify(user1);
+        var user2 = getProfileQuery(requester);
+        var stringUser2 = stringify(user2);
+        if (stringUser1 == "[]" || stringUser2 == "[]") {
+            response.sendError(404);
+        } else {
+            jsonResult.requestee = requestee;
+            jsonResult.sessions = [];
+            print(jsonResult);
+        }
+    }
+}
+
+%>

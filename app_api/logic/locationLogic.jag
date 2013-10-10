@@ -1,0 +1,50 @@
+<%
+   include("../dbmodel/locationQuery.jag");
+
+   function getLocation(id){
+       if(id) {
+            var result=getLocationQuery(id);
+            var finalResult=stringify(result);
+            if(finalResult!="[]"){
+                print(parse(finalResult.toLowerCase()));
+            }else{
+                response.sendError(404);
+            }
+       } else {
+           print(require('/data/locations.js').locations);
+       }
+   }
+
+    function addLocation(name,coords){
+        addLocationQuery(name,coords);
+        commitQuery();
+        var locationId=getLastLocationEntry();
+        var stringId=locationId[0].ID;
+        var result='{"id":'+stringId+'}';
+        print(parse(result));
+    }
+
+    function updateLocation(id,name,coords){
+        var result=getLocationQuery(id);
+        var finalResult=stringify(result);
+        if(finalResult!="[]"){
+            updateLocationQuery(id,name,coords);
+            commitQuery();
+            var stringResult='{"id":'+id+'}';
+            print(parse(stringResult));
+        }else{
+            response.sendError(404);
+        }
+    }
+
+    function deleteLocation(id){
+        var result=getLocationQuery(id);
+        var finalResult=stringify(result);
+        if(finalResult!="[]"){
+            deleteLocationQuery(id);
+            commitQuery();
+        }else {
+            response.sendError(404);
+        }
+    }
+%>

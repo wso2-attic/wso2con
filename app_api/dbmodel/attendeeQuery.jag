@@ -1,0 +1,54 @@
+<%
+
+include("../db.jag");
+
+function getProfileQuery(id) {
+    var result = db.query("SELECT * FROM attendee WHERE id=?", id);
+    return result;
+}
+
+function getProfileByEmailQuery(email) {
+    var result = db.query("SELECT * FROM attendee WHERE email=?", email);
+    return result;
+}
+
+function getSponsorFollowUpQuery(id) {
+    var result = db.query("SELECT sponsor FROM sponsor_follow_up WHERE attendee=?", id);
+    return result;
+}
+
+function updateProfileQuery(id, first_name, last_name, email, title, organisation, bio, expertise, home_location, meeting_interests, reg_code, accepting) {
+    db.query("UPDATE attendee SET firstname=?, lastname=?, email=?, title=?, organisation=?, bio=?, expertise=?, home=?, interests=?, regcode=?, accepting=? WHERE id=?", first_name, last_name, email, title, organisation, bio, expertise, home_location, meeting_interests, reg_code, accepting, id);
+}
+
+function searchUsersQuery(name, organisation, expertise, home, interests, regcode) {
+    var result = db.query("SELECT * FROM attendee WHERE (firstname LIKE ? OR lastname LIKE ? )AND organisation LIKE ? AND interests LIKE ? AND home LIKE ? AND expertise LIKE ? AND regcode LIKE ?", name, name, organisation, interests, home, expertise, regcode);
+    return result;
+}
+
+function addSponsorFollowUpQuery(id, sponsor) {
+    db.query("INSERT INTO sponsor_follow_up VALUES(?,?)", id, sponsor);
+}
+
+function deleteSponsorFollowUpsQuery(id) {
+    db.query("DELETE FROM sponsor_follow_up WHERE attendee=?", id);
+}
+
+function addProfileQuery(id, first_name, last_name, email, title, organisation, bio, expertise, home_location, meeting_interests, reg_code, accepting) {
+    db.query("INSERT INTO attendee VALUES(?,?,?,?,?,?,?,?,?,?,?,?)", id, first_name, last_name, email, title, organisation,
+            bio, expertise, reg_code, home_location, meeting_interests, accepting);
+}
+
+function removeAttendeeQuery(attendee_id) {
+    db.query("DELETE FROM attendee WHERE id=?", attendee_id);
+}
+
+function commitQuery() {
+    //db.commit();
+}
+
+function rollbackQuery() {
+    //db.rollback();
+}
+
+%>

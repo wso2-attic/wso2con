@@ -1,0 +1,134 @@
+<%
+    include("../dbmodel/sponsorQuery.jag");
+    include("../dbmodel/attendeeQuery.jag");
+
+    function getSponsors(){
+        print(require('/data/sponsors.js').sponsors);
+    }
+
+    function addSponsor(level,organisation,description,url,logo,small_ad,large_ad,reps,contacts){
+            if(level=="gold"){
+                level=1;
+            }else if(level=="silver"){
+                level=2;
+            }else if(level=="media"){
+                level=3;
+            }
+            addSponsorQuery(level,organisation,description,url,logo,small_ad,large_ad);
+            var sponsor_id=getLastSponsorEntry();
+            var idString=stringify(sponsor_id);
+            if(idString!="[]" && reps!=null){
+                var jsonReps=parse(reps);
+                var sponsorIdString=sponsor_id[0].ID;
+                for(i=0;i<jsonReps.length;i++){
+                    var rep_id=jsonReps[i];
+                    var userId=getProfileQuery(rep_id);
+                    var stringUser=stringify(userId);
+                    if(stringUser!="[]"){
+                        addSponsorRepsQuery(sponsorIdString,rep_id);
+                    }else{
+                        rollbackQuery();
+                        response.sendError(404);
+                    }
+                }
+            }
+            if(idString!="[]" && contacts!=null){
+                var jsonContacts=parse(contacts);
+                var sponsorIdString=sponsor_id[0].ID;
+                for(i=0;i<jsonContacts.length;i++){
+                    var contact_id=jsonContacts[i];
+                    var userId=getProfileQuery(contact_id);
+                    var stringUser=stringify(userId);
+                    if(stringUser!="[]"){
+                        addSponsorContactsQuery(sponsorIdString,contact_id);
+                    }else{
+                        rollbackQuery();
+                        response.sendError(404);
+                    }
+                }
+            }
+            commitQuery();
+            var result='{"id":'+sponsor_id[0].ID+'}';
+            print(parse(result));
+        }
+
+        function updateSponsor(id,level,organisation,description,url,logo,small_ad,large_ad,reps,contacts){
+            var sponsor=getSponsorQuery(id);
+            var stringSponsor=stringify(sponsor);
+            if(level=="gold"){
+                level=1;
+            }else if(level=="silver"){
+                level=2;
+            }else if(level=="media"){
+                level=3;
+            }
+            if(stringSponsor!="[]"){
+                updateSponsorQuery(id,level,organisation,description,url,logo,small_ad,large_ad);
+                deleteAllSponsorContactsQuery(id);
+                deleteAllSponsorRepsQuery(id);
+                if(reps!=null){
+                    var jsonReps=parse(reps);
+                    for(i=0;i<jsonReps.length;i++){
+                        var rep_id=jsonReps[i];
+                        var userId=getProfileQuery(rep_id);
+                        var stringUser=stringify(userId);
+                        if(stringUser!="[]"){
+                            addSponsorRepsQuery(id,rep_id);
+                        }else{
+                            rollbackQuery();
+                            response.sendError(404);
+                        }
+                    }
+                }
+                if(contacts!=null){
+                    var jsonContacts=parse(contacts);
+                    for(i=0;i<jsonContacts.length;i++){
+                        var contact_id=jsonContacts[i];
+                        var userId=getProfileQuery(contact_id);
+                        var stringUser=stringify(userId);
+                        if(stringUser!="[]"){
+                            addSponsorContactsQuery(id,contact_id);
+                        }else {
+                            rollbackQuery();
+                            response.sendError(404);
+                        }
+                    }
+                }
+                commitQuery();
+                var result='{"id":'+id+'}';
+                print(parse(result));
+            }else{
+                response.sendError(404);
+            }
+
+        }
+
+        function deleteSponsor(id){
+            var sponsor=getSponsorQuery(id);
+            var stringSponsor=stringify(sponsor);
+            if(stringSponsor!="[]"){
+                deleteAllSponsorContactsQuery(id);
+                deleteAllSponsorRepsQuery(id);
+                deleteSponsorQuery(id);
+                commitQuery();
+            }else{
+                response.sendError(404);
+            }
+
+        }
+
+    function getSplashScreenLogo(){
+        var logo= getSplashScreenLogoQuery();
+        var result=stringify(logo).toLowerCase();
+        var stringResult='{"logo":'+result+'}';
+        print(parse(stringResult));
+    }
+
+    function getSponsorAds(){
+        var ads = getSponsorAdsQuery();
+        var result=stringify(ads).toLowerCase();
+        var stringResult='{"ads":'+result+'}';
+        print(parse(stringResult));
+    }
+
+%>

@@ -1,0 +1,89 @@
+<%
+    include("db.jag");
+
+    var query1="DROP TABLE IF EXISTS attendee; CREATE TABLE attendee (id VARCHAR(255) NOT NULL PRIMARY KEY,firstname VARCHAR(255) NOT NULL NULL,lastname VARCHAR(255) NOT NULL,email VARCHAR(255) NOT NULL," +
+     "title VARCHAR(255) NULL DEFAULT NULL,organisation VARCHAR(255) NULL DEFAULT NULL,bio CLOB NULL DEFAULT NULL,expertise VARCHAR(255) NULL DEFAULT NULL," +
+      "regcode VARCHAR(255) NOT NULL,home VARCHAR(255) NULL DEFAULT NULL,interests VARCHAR(255) NULL DEFAULT NULL);";
+
+    var query2="DROP TABLE IF EXISTS session; CREATE TABLE session (id INT NOT NULL AUTO_INCREMENT(1,1) PRIMARY KEY,type INT NULL NOT NULL," +
+     "title VARCHAR(255) NULL DEFAULT NULL,abstract VARCHAR(255) NULL DEFAULT NULL," +
+      "start TIMESTAMP NULL DEFAULT NULL,end TIMESTAMP NULL DEFAULT NULL,location INT NULL DEFAULT NULL,feedback VARCHAR(255) NULL DEFAULT NULL);";
+
+    var query3="DROP TABLE IF EXISTS meeting;CREATE TABLE meeting (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+     "requester VARCHAR(255) NOT NULL,requestee VARCHAR(255) NOT NULL,session INT NOT NULL, status INT NOT NULL," +
+      "requestmessage VARCHAR(255) NULL DEFAULT NULL,responsemessage VARCHAR(255) NULL DEFAULT NULL," +
+       "location INT NULL DEFAULT NULL,notes VARCHAR(255) NULL DEFAULT NULL,sendnotes INT NULL DEFAULT NULL);";
+
+    var query4="DROP TABLE IF EXISTS sponsor;CREATE TABLE sponsor (id INT NOT NULL AUTO_INCREMENT(1,1) PRIMARY KEY," +
+     "level INT NULL DEFAULT NULL, organisation VARCHAR(255) NULL DEFAULT NULL,description VARCHAR(255)NULL DEFAULT NULL," +
+      "url VARCHAR(255) NULL DEFAULT NULL,logo VARCHAR(255) NULL DEFAULT NULL,smallad VARCHAR(255) NULL DEFAULT NULL," +
+       "largead VARCHAR(255) NULL DEFAULT NULL);";
+
+    var query5="DROP TABLE IF EXISTS location;CREATE TABLE location (id INT NOT NULL AUTO_INCREMENT(1,1) PRIMARY KEY," +
+     "name VARCHAR(255) NULL DEFAULT NULL,coords VARCHAR(255) NULL DEFAULT NULL);";
+
+    var query6="DROP TABLE IF EXISTS schedule;CREATE TABLE schedule (user VARCHAR(255) NOT NULL,session INT NOT NULL," +
+     "attending BOOLEAN NULL DEFAULT NULL,notes VARCHAR(255) NULL DEFAULT NULL,contentrating INT NULL DEFAULT NULL," +
+      "speakerrating INT NULL DEFAULT NULL,feedback VARCHAR(255) NULL DEFAULT NULL,PRIMARY KEY (user, session));";
+
+    var query7="DROP TABLE IF EXISTS meeting_availability;CREATE TABLE meeting_availability (session INT NOT NULL," +
+     "user VARCHAR(255) NOT NULL,status INT NULL DEFAULT NULL,PRIMARY KEY (session, user));";
+
+    var query8="DROP TABLE IF EXISTS settings;CREATE TABLE settings (user VARCHAR(255) NOT NULL PRIMARY KEY," +
+     "otid VARCHAR(255) NULL DEFAULT NULL);";
+
+    var query9="DROP TABLE IF EXISTS notification_queue;CREATE TABLE notification_queue (user VARCHAR(255) NOT NULL," +
+     "meeting INT NOT NULL,PRIMARY KEY (user, meeting));";
+
+    var query10="DROP TABLE IF EXISTS sponsor_contacts;CREATE TABLE sponsor_contacts (sponsor INT NOT NULL," +
+     "contact VARCHAR(255) NOT NULL,PRIMARY KEY (sponsor, contact));";
+
+    var query11="DROP TABLE IF EXISTS sponsor_reps;CREATE TABLE sponsor_reps (sponsor INT NOT NULL,rep VARCHAR(255) NOT NULL," +
+     "PRIMARY KEY (sponsor, rep));";
+
+    var query12="DROP TABLE IF EXISTS sponsor_follow_up;CREATE TABLE sponsor_follow_up (attendee VARCHAR(255) NOT NULL," +
+     "sponsor INT NULL DEFAULT NULL,PRIMARY KEY (attendee, sponsor));";
+
+    var query13="DROP TABLE IF EXISTS session_speaker;CREATE TABLE session_speaker (session INT NOT NULL," +
+        "speaker VARCHAR(255) NOT NULL, PRIMARY KEY (session, speaker));";
+
+    var query14="ALTER TABLE session ADD FOREIGN KEY (location) REFERENCES location (id);" +
+        "ALTER TABLE meeting ADD FOREIGN KEY (requester) REFERENCES attendee (id);" +
+        "ALTER TABLE meeting ADD FOREIGN KEY (requestee) REFERENCES attendee (id);" +
+        "ALTER TABLE meeting ADD FOREIGN KEY (session) REFERENCES session (id);" +
+        "ALTER TABLE meeting ADD FOREIGN KEY (location) REFERENCES location (id);" +
+        "ALTER TABLE schedule ADD FOREIGN KEY (user) REFERENCES attendee (id);" +
+        "ALTER TABLE schedule ADD FOREIGN KEY (session) REFERENCES session (id);" +
+        "ALTER TABLE meeting_availability ADD FOREIGN KEY (session) REFERENCES session (id);" +
+        "ALTER TABLE meeting_availability ADD FOREIGN KEY (user) REFERENCES attendee (id);" +
+        "ALTER TABLE settings ADD FOREIGN KEY (user) REFERENCES attendee (id);" +
+        "ALTER TABLE notification_queue ADD FOREIGN KEY (user) REFERENCES attendee (id);" +
+        "ALTER TABLE notification_queue ADD FOREIGN KEY (meeting) REFERENCES meeting (id);" +
+        "ALTER TABLE sponsor_contacts ADD FOREIGN KEY (sponsor) REFERENCES sponsor (id);" +
+        "ALTER TABLE sponsor_contacts ADD FOREIGN KEY (contact) REFERENCES attendee (id);" +
+        "ALTER TABLE sponsor_reps ADD FOREIGN KEY (sponsor) REFERENCES sponsor (id);" +
+        "ALTER TABLE sponsor_reps ADD FOREIGN KEY (rep) REFERENCES attendee (id);" +
+        "ALTER TABLE sponsor_follow_up ADD FOREIGN KEY (attendee) REFERENCES attendee (id);" +
+        "ALTER TABLE sponsor_follow_up ADD FOREIGN KEY (sponsor) REFERENCES sponsor (id); " +
+        "ALTER TABLE session_speaker ADD FOREIGN KEY (session) REFERENCES session (id); " +
+        "ALTER TABLE session_speaker ADD FOREIGN KEY (speaker) REFERENCES attendee (id);" ;
+
+    db.query(query1);
+    db.query(query2);
+    db.query(query3);
+    db.query(query4);
+    db.query(query5);
+    db.query(query6);
+    db.query(query7);
+    db.query(query8);
+    db.query(query9);
+    db.query(query10);
+    db.query(query11);
+    db.query(query12);
+    db.query(query13);
+    db.query(query14);
+    db.commit();
+
+    print("Database successfully created.");
+
+%>

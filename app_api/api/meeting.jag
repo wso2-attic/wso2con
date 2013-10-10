@@ -1,0 +1,49 @@
+<%
+   include("../logic/meetingLogic.jag");
+
+   var verb = request.getMethod();
+   var user= request.getParameter('user');
+   var meeting_id = request.getParameter('id');
+   var requestee = request.getParameter('requestee');
+   var req_msg = request.getParameter('requestmessage');
+   var status= request.getParameter('action');
+   var notes= request.getParameter('notes');
+   var send_notes = request.getParameter('sendnotes');
+   var session_id =request.getParameter('session');
+   var res_msg =request.getParameter('responsemessage');
+   var current_time = request.getParameter('now');
+
+   var uri = request.getPathInfo();
+   if(uri != null) {
+   var uriMatcher = new URIMatcher(uri);
+       if(uriMatcher.match("/{user}/{page}")){
+           user=uriMatcher.elements().user;
+       }
+       if(uriMatcher.match("/{user}/{page}/{id}")){
+            user=uriMatcher.elements().user;
+            meeting_id=uriMatcher.elements().id;
+       }
+   }
+
+   if(verb=="GET" && meeting_id=="nowplaying"){
+        getNowPlayingMeeting(user,current_time);
+   }else if(verb=="GET" && meeting_id=="upnext"){
+        getUpNextMeeting(user,current_time);
+   }else if(verb=="GET" && meeting_id=="pending"){
+        getPendingMeetings(user);
+   }else if(verb=="GET"){
+        if(user!=null && meeting_id == null){
+            getMeetings(user);
+        }else if(meeting_id!=null){
+            getMeeting(meeting_id);
+        }
+   }else if(verb=="POST" && req_msg!=null && meeting_id==null){
+        requestMeeting(user,requestee,session_id,req_msg);
+   }else if(verb=="PUT" && meeting_id!=null && res_msg!=null && status!=null){
+        acceptMeeting(user,meeting_id,status,res_msg);
+   }else if(verb=="PUT" && meeting_id!=null && notes!=null && send_notes!=null){
+        updateMeeting(user,meeting_id,notes,send_notes);
+   }
+
+
+%>

@@ -1,0 +1,102 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/search",
+    "apis": [
+        {
+            "path": "/api/search",
+            "description": "Search attendees",
+            "operations": [
+                {
+                    "httpMethod": "PUT",
+                    "nickname": "searchAttendees",
+                    "responseClass": "List[Attendee]",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "paramType": "query",
+                            "description": "Name of the attendee you are looking for. Use * for any.",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "expertise",
+                            "paramType": "query",
+                            "description": "Expertise of attendees you are looking for. Use * for any.",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "home",
+                            "paramType": "query",
+                            "description": "Home location of attendees you are looking for. Use * for any.",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "organisation",
+                            "paramType": "query",
+                            "description": "Organisation of attendees you are looking for. Use * for any.",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "interests",
+                            "paramType": "query",
+                            "description": "Meeting interests of attendees you are looking for. Use * for any.",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "regcode",
+                            "paramType": "query",
+                            "description": "Registration code used for registration.",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get attendees according to the search criteria",
+                    "errorResponses": []
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Attendee": {
+            "id": "Attendee",
+            "properties": {
+                "id": {
+                    "type": "String"
+                },
+                "firstname": {
+                    "type": "String"
+                },
+                "lastname": {
+                    "type": "String"
+                },
+                "title": {
+                    "type": "String"
+                },
+                "organisation": {
+                    "type": "String"
+                },
+                "expertise": {
+                    "type": "String"
+                },
+                "bio": {
+                    "type": "String"
+                },
+                "home": {
+                    "type": "String"
+                },
+                "regcode": {
+                    "type": "String"
+                },
+                "interests": {
+                    "type": "String"
+                }
+            }
+        }
+    }
+}

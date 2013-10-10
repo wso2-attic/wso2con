@@ -1,0 +1,139 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/<user>/availability",
+    "apis": [
+        {
+            "path": "/api/{user}/availability",
+            "description": "Operations about user meeting availability",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "nickname": "updateMeetingAvailability",
+                    "responseClass": "void",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user whose meeting availability needs to be updated",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "status",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "available",
+                                    "unavailable"
+                                ]
+                            }
+                        },
+                        {
+                            "name": "session",
+                            "paramType": "query",
+                            "dataType": "Int",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Update user's availability for meetings",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "The user doesn't exist"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getMeetingAvailability",
+                    "responseClass": "Availability",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user whose meeting availabilities should be fetched",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get user's meeting availability",
+                    "notes": "Returns details of when a user is available for meetings along with interests",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "The user doesn't exist"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/{user}/availability/common",
+            "decription": "Operations about user meeting availability",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getCommonAvailability",
+                    "responseClass": "CommonAvailability",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "requestee",
+                            "paramType": "query",
+                            "description": "With whom user's availability slots should match",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get common meeting availability",
+                    "notes": "Returns details common meeting availabilities for two attendees",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "Either one or both users do not exist"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Availability": {
+            "id": "Availability",
+            "properties": {
+                "user": {
+                    "type": "String"
+                },
+                "meetings": {
+                    "type": "Array[Int]",
+                    "description": "Sessions available for meetings"
+                },
+                "interests": {
+                    "type": "String"
+                }
+            }
+        },
+        "CommonAvailability": {
+            "id": "Availability",
+            "properties": {
+                "requestee": {
+                    "type": "String"
+                },
+                "sessions": {
+                    "type": "Array[Int]",
+                    "description": "Sessions available for meetings"
+                }
+            }
+        }
+    }
+}

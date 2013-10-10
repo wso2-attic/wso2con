@@ -1,0 +1,46 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/login",
+    "apis": [
+        {
+            "path": "/api/login",
+            "decription": "Operations about login",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "login",
+                    "responseClass": "Login",
+                    "parameters": [{
+                            "name": "username",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },{
+                            "name": "password",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        }],
+                    "summary": "user login",
+                    "notes": "Users can login using this api",
+                    "errorResponses": [{"error":""}]
+                }
+            ]
+        }
+    ],
+    "models": {
+	"Login":{
+		"id":"Login",
+		"properties": {
+			"status": {
+		            "type": "String"
+		        },
+				"id": {
+		            "type": "String"
+		        }
+		}
+	}
+    }
+}

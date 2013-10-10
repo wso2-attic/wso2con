@@ -1,0 +1,86 @@
+<%
+    include("../db.jag");
+
+    function getAllSponsorsQuery(){
+        var result=db.query("SELECT * FROM sponsor");
+        return result;
+    }
+
+    function getSponsorQuery(sponsor_id){
+        var result=db.query("SELECT * FROM sponsor WHERE id=?",sponsor_id);
+        return result;
+    }
+
+    function getSponsorContactsQuery(sponsor_id){
+        var result=db.query("SELECT contact FROM sponsor_contacts WHERE sponsor=?",sponsor_id);
+        return result;
+    }
+
+    function getSponsorRepsQuery(sponsor_id){
+        var result=db.query("SELECT rep FROM sponsor_reps WHERE sponsor=?",sponsor_id);
+        return result;
+    }
+
+    function addSponsorQuery(level,organistion,description,url,logo,small_ad,large_ad){
+        db.query("INSERT INTO sponsor(level,organisation,description,url,logo,smallad,largead) VALUES(?,?,?,?,?,?,?)",level,organistion,description,url,logo
+        ,small_ad,large_ad);
+    }
+
+    function addSponsorRepsQuery(sponsor_id,rep_id){
+        db.query("INSERT INTO sponsor_reps VALUES(?,?)",sponsor_id,rep_id);
+    }
+
+    function addSponsorContactsQuery(sponsor_id,contact_id){
+        db.query("INSERT INTO sponsor_contacts VALUES(?,?)",sponsor_id,contact_id);
+    }
+
+    function updateSponsorQuery(sponsor_id,level,organistion,description,url,logo,small_ad,large_ad){
+        db.query("UPDATE sponsor SET level=?, organisation=?, description=?, url=?, logo=?, smallad=?, largead=? WHERE id=?",level,organistion,description,url,logo,small_ad,large_ad,sponsor_id);
+    }
+
+    function deleteSponsorQuery(sponsor_id){
+        db.query("DELETE FROM sponsor WHERE id=?",sponsor_id);
+    }
+
+    function deleteSponsorContactQuery(sponsor_id,contact_id){
+        db.query("DELETE FROM sponsor_contacts WHERE sponsor=? AND contact=?",sponsor_id,contact_id);
+    }
+
+    function deleteSponsorRepsQuery(sponsor_id,rep_id){
+        db.query("DELETE FROM sponsor_reps WHERE sponsor=? AND rep=?",sponsor_id,rep_id);
+    }
+
+    function deleteAllSponsorContactsQuery(sponsor_id){
+        db.query("DELETE FROM sponsor_contacts WHERE sponsor=?",sponsor_id);
+    }
+
+    function deleteAllSponsorRepsQuery(sponsor_id){
+        db.query("DELETE FROM sponsor_reps WHERE sponsor=?",sponsor_id);
+    }
+
+    function getLastSponsorEntry(){
+        var result=db.query("SELECT id FROM sponsor ORDER BY id DESC LIMIT 1");
+        return result;
+    }
+
+    function getSplashScreenLogoQuery(){
+        var result=db.query("SELECT id,organisation,url,logo FROM sponsor WHERE level=1");
+        return result;
+    }
+
+    function getSponsorAdsQuery(){
+        var result=db.query("SELECT id,organisation,url,smallad,largead FROM sponsor");
+        return result;
+    }
+
+    function commitQuery(){
+        //db.commit();
+    }
+
+    function rollbackQuery(){
+        //db.rollback();
+    }
+
+
+
+%>

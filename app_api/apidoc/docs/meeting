@@ -1,0 +1,357 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/<user>/meeting",
+    "apis": [
+        {
+            "path": "/api/{user}/meeting",
+            "decription": "Operations about user's meetings",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "nickname": "requestMeeting",
+                    "responseClass": "void",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user who is requesting a meeting",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "requestee",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "session",
+                            "paramType": "query",
+                            "dataType": "Int",
+                            "required": true
+                        },
+                        {
+                            "name": "requestmessage",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Request a meeting ",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "Requester, requestee or session not found"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getAllMeetings",
+                    "responseClass": "List[Meeting]",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user whose meetings need to be fetched",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get user's all meetings",
+                    "notes": "Returns details of a user's meetings",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "User not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/{user}/meeting/{id}",
+            "decription": "Operations about a meeting",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getMeeting",
+                    "responseClass": "Meeting",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user whose meeting needs to be fetched",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "description": "ID of the meeting to be fetched",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get specified meeting",
+                    "notes": "Returns details of a specified meeting",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "Meeting id not found"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "PUT",
+                    "nickname": "acceptMeeting",
+                    "responseClass": "void",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user who is accepting a meeting",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "dataType": "Int",
+                            "required": true,
+                            "description": "ID of the meeting to be accepted"
+                        },
+                        {
+                            "name": "action",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "accept",
+                                    "decline",
+                                    "cancel"
+                                ]
+                            },
+                            "description": "Whether the user wants to accept, decline or cancel the meeting"
+                        },
+                        {
+                            "name": "responsemessage",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Accept, decline a meeting request or cancel a scheduled meeting",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "Meeting id not found"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "PUT",
+                    "nickname": "updateMeeting",
+                    "responseClass": "void",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user who is accepting a meeting",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "dataType": "Int",
+                            "required": true,
+                            "description": "ID of the meeting to be accpeted"
+                        },
+                        {
+                            "name": "notes",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false,
+                            "description": "Notes of the meeting"
+                        },
+                        {
+                            "name": "sendnotes",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "yes",
+                                    "no"
+                                ]
+                            },
+                            "description": "Whether notes should be sent to participants after meeting"
+                        }
+                    ],
+                    "summary": "Update the notes and sendnotes fields of the meeting",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "Meeting id not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/{user}/meeting/nowplaying",
+            "decription": "Operations about a meeting",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getNowPlayingMeeting",
+                    "responseClass": "Meeting",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user whose meeting needs to be fetched",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "now",
+                            "paramType": "query",
+                            "description": "Current time",
+                            "dataType": "Date",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get current meeting",
+                    "notes": "Returns details of the current meeting",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "User not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/{user}/meeting/upnext",
+            "decription": "Operations about a meeting",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getUpNextMeeting",
+                    "responseClass": "Meeting",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user whose meeting needs to be fetched",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "now",
+                            "paramType": "query",
+                            "description": "Current time",
+                            "dataType": "Date",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get next meeting",
+                    "notes": "Returns details of the next meeting",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "User not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/{user}/meeting/pending",
+            "decription": "Operations about a meeting",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getPendingMeetings",
+                    "responseClass": "List[Meeting]",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user whose meeting needs to be fetched",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get pending meetings",
+                    "notes": "Returns details of the pending meeting requests",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "User not found"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Meeting": {
+            "id": "Meeting",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                },
+                "user": {
+                    "type": "String"
+                },
+                "session": {
+                    "type": "Int"
+                },
+                "status": {
+                    "type": "String",
+                    "allowableValues": {
+                        "valueType": "LIST",
+                        "values": [
+                            "pending",
+                            "accepted",
+                            "declined",
+                            "cancelled"
+                        ]
+                    }
+                },
+                "requestMessage": {
+                    "type": "String"
+                },
+                "responseMessage": {
+                    "type": "String"
+                },
+                "location": {
+                    "type": "Int"
+                },
+                "notes": {
+                    "type": "String"
+                },
+                "sendnotes": {
+                    "type": "String",
+                    "allowableValues": {
+                        "valueType": "LIST",
+                        "values": [
+                            "yes",
+                            "no",
+                            "sent"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

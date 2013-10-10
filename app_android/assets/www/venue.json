@@ -1,0 +1,39 @@
+var basevenueinfo = {
+venueinfo: [
+    {
+        id: "topic1",
+        caption: "UCSF Shuttles",
+        description: "<p>There are multiple UCSF shuttles that provide access to the Mission Bay Conference Center (Teal, Red, Gold, Blue, Gray, Lilac). The most frequently used are the Teal Shuttle from Caltrain at 4th & King and the Red Shuttle from 16th Street BART. view the shuttle map and schedules, <a href='http://campuslifeservices.ucsf.edu/transportation/shuttles/timetables/default.php'>click here</a>.</p>"
+    },
+    
+    {
+    	id: "topic2",
+    	caption: "Parking",
+    	description: "Paid parking is available onsite at Mission Bay Conference Center Parking Garage. The are two parking lots on-site located on opposites sides of the building."
+    },
+    
+    {
+    	id: "topic3",
+    	caption: "Public Transportation",
+    	description: "<h3>BART</h3><p>Take BART to the 16th Street stop. Exit the station to the left of the turnstiles. Walk to the right towards the sidewalk of 16th street. The UCSF Shuttle stops in front of the Burger King Restaurant. Take the Red Shuttle to Mission Bay Community Center (William J. Rutter Center). (The shuttle itself is not colored red, the signage on the shuttle says red). Shuttle arrives every 15 minutes, starting at 6:15AM with the last one at 8:05PM</p><h3>MUNI</h3><p>T-Line – Third Street light rail stops at the Mission Bay UCSF Campus. For train schedules, visit <a href='http://www.sfmta.com/'>www.sfmuni.com</a></p>"
+    },
+    
+    {
+    	id: "topic4",
+    	caption: "Driving Directions",
+    	description: "<h3>From 101 North</h3><p>Exit onto Vermont Street. Turn right onto 16th Street and continue for 0.6 miles (cross the railroad tracks that are under the I-280 overpass). Turn left onto Owens Street. Turn right into Parking Garage.</p><h3>Directions from the North Bay/Golden Gate Bridge:</h3><p>After crossing the Golden Gate Bridge, drive east on 101 (Doyle Drive) towards downtown. Exit at Marina Boulevard and follow Marina Boulevard past Fort Mason. Turn left onto Bay Street. Turn right onto the Embarcadero. After passing under the Bay Bridge, the Embarcadero will become King Street. Turn left onto 3rd Street just past SBC Baseball Park. Cross 3rd street (Lefty O’Doul Bridge) and continue south on 3rd Street. Turn right on 16th Street. Turn right onto Owens Street. Turn right into Parking Garage.</p><h3>From 280 North</h3><p>Exit at Mariposa Street and turn left. Turn right on Mississippi Street and go two blocks. Turn right onto 16th Street. Turn left onto Owens Street. Turn right into Parking Garage.</p><h3>Directions from the East Bay/Bay Bridge:</h3><p>After crossing the Bay Bridge, exit at Fifth Street and turn left onto Harrison. Go one block, then turn left onto 6th Street. Turn right onto Brannan. Turn left on 7th and go straight until 16th Street. Turn left on 16th Street. Turn left onto Owens Street. Turn right into Parking Garage.</p>"
+    },
+    
+    {
+    	id: "topic5",
+    	caption: "Hotels Near Venue",
+    	description: "<a href='http://www.harborcourthotel.com/'>Harbor Court Hotel</a><p>165 Steuart Street<br />San Francisco, CA 94105<br />Phone: (+1) 415-882-1300<br />Reservations: (+1) 800-346-0555</p><a href='http://www.sanfranciscohiltonhotel.com/'>Hilton San Francisco Financial</a><p> District<br />750 Kearny Street<br />San Francisco, CA 94108<br />Phone: (+1) 415-433-6600</p><a href='http://www.handlery.com/sf/'>The Handlery Union Square Hotel</a><p>351 Geary St.<br />San Francisco, CA 94102<br />Reservations: (+1) 415-321-7568</p><a href='http://www.jdvhotels.com/tomo/'>Hotel Tomo</a><p>1800 Sutter St.<br />San Francisco, CA 94115<br />Phone: (+1) 415-921-4000<br />Reservations: (+1) 888-822-8666</p><a href='http://www.hotelvitale.com/'>Hotel Vitale San Francisco</a><p> 8 Mission Street<br />San Francisco, CA 94105<br />Phone: (+1) 415-278-3700<br />Toll Free: (+1) 888-890-8688</p><h3>Fisherman’s Wharf Area</h3><a href='http://www.ichotelsgroup.com/h/d/ex/1/en/hotel/sfonp?rpb=hotel&#038;crUrl=/h/d/ex/1/en/hotelsearchresults'>Holiday Inn Express Hotel &#038; Suites, Fisherman’s Wharf</a><p> 550 North Point Street<br />San Francisco, CA 94133<br />Reservations: (+1) 415-409-4600</p><a href='http://www.themosser.com/'>The Mosser Hotel</a><p>54 Fourth St.<br />San Francisco, CA 94103<br />Reservations: (+1) 415-357-6256</p><a href='http://www.starwoodhotels.com/lemeridien/property/overview/index.html?propertyID=1957'>Le Méridien San Francisco</a><p>333 Battery Street<br />San Francisco, CA 94111<br />Phone: (+1) 415-296-2900</p><h3>Downtown/Union Square Area</h3><a href='http://www.hotelnikkosf.com/'>Hotel Nikko San Francisco</a><p>222 Mason Street<br />San Francisco, CA 94102<br />Reservations: (+1) 800-248-3308</p><a href='http://www.jdvhotels.com/kabuki/'>Hotel Kabuki</a><p>1625 Post St.<br />San Francisco, CA 94115<br />Phone: (+1) 415-922-3200<br />Reservations: (+1) 800-533-4567</p>"
+    },
+    
+    {
+    	id: "topic6",
+    	caption: "Airports",
+    	description: "<p><b>San Francisco International Airport (SFO)</b><br />25 minutes</p><p><b>Oakland International Airport (OAK)</b><br />45 minutes</p>"
+    }
+]
+}

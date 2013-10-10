@@ -1,0 +1,180 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/<user>/message",
+    "apis": [
+        {
+            "path": "/api/{user}/message",
+            "decription": "Operations about user's messages",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "nickname": "addmessage",
+                    "responseClass": "void",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "to",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "message",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "status",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Create new message",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "couldn't send a message"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getAllMmessages",
+                    "responseClass": "List[message]",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get user's all messages",
+                    "notes": "Returns details of a user's messages",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "messages not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/{user}/message/{status}",
+            "description": "Operations about a meeting",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getMessage",
+                    "responseClass": "List[message]",
+                    "parameters": [
+                        {
+                            "name": "user",
+                            "paramType": "path",
+                            "description": "ID of the user whose meeting needs to be fetched",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "status",
+                            "paramType": "path",
+                            "description": "status of the message",
+                            "dataType": "String",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get message on a specific status",
+                    "notes": "Returns details of a specified message",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "status found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/message/{id}/{status}",
+            "description": "Operations about a meeting",
+            "operations": [
+                {
+                    "httpMethod": "PUT",
+                    "nickname": "changeMessageStatus",
+                    "responseClass": "void",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "description": "Message Id",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "status",
+                            "paramType": "path",
+                            "dataType": "String",
+                            "required": true,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "new",
+                                    "read"
+                                ]
+                            }
+                        }
+                    ],
+                    "summary": "Update message status",
+                    "errorResponses": [
+                        {
+                            "code": 400,
+                            "reason": "Message not found"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "message": {
+            "id": "message",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                },
+                "user": {
+                    "type": "String"
+                },
+                "from": {
+                    "type": "String"
+                },
+                "status": {
+                    "type": "String",
+                    "allowableValues": {
+                        "valueType": "LIST",
+                        "values": [
+                            "new",
+                            "replied"
+                        ]
+                    }
+                },
+                "message": {
+                    "type": "String"
+                },
+                "timestamp": {
+                     "type": "String"
+                }
+            }
+        }
+    }
+}

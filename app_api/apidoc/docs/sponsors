@@ -1,0 +1,140 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/sponsors",
+    "apis": [
+        {
+            "path": "/api/sponsors",
+            "description": "Operations about sponsors",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getSponsors",
+                    "responseClass": "List[Sponsor]",
+                    "parameters": [],
+                    "summary": "Get sponsor list with details",
+                    "errorResponses": []
+                }
+            ]
+        },
+        {
+            "path": "/api/sponsors/splashscreenlogo",
+            "description": "Get splashscreenlogo",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getSlashScreenlogo",
+                    "responseClass": "Logo",
+                    "parameters": [],
+                    "summary": "Get gold sponsor's logo",
+                    "errorResponses": []
+                }
+            ]
+        },
+        {
+            "path": "/api/sponsors/ads",
+            "decription": "Get sponsor ads",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getSponsorAds",
+                    "responseClass": "List[Ad]",
+                    "parameters": [],
+                    "summary": "Get sponsor ads",
+                    "errorResponses": []
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Sponsor": {
+            "id": "Sponsor",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                },
+                "organisation": {
+                    "type": "String"
+                },
+                "level": {
+                    "type": "String",
+                    "allowableValues": {
+                        "valueType": "LIST",
+                        "values": [
+                            "gold",
+                            "silver",
+                            "media"
+                        ]
+                    }
+                },
+                "description": {
+                    "type": "String"
+                },
+                "logo": {
+                    "type": "String"
+                },
+                "url": {
+                    "type": "String"
+                },
+                "smallad": {
+                    "type": "String"
+                },
+                "largead": {
+                    "type": "String"
+                },
+                "reps": {
+                    "type": "Array[String]"
+                },
+                "contacts": {
+                    "type": "Array[String]"
+                }
+            }
+        },
+        "Ad": {
+            "id": "Ad",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                },
+                "organisation": {
+                    "type": "String"
+                },
+                "url": {
+                    "type": "String"
+                },
+                "smallad": {
+                    "type": "String"
+                },
+                "largead": {
+                    "type": "String"
+                }
+            }
+        },
+        "Logo": {
+            "id": "Logo",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                },
+                "organisation": {
+                    "type": "String"
+                },
+                "logo": {
+                    "type": "String"
+                },
+                "url": {
+                    "type": "String"
+                }
+            }
+        },
+        "SponsorId": {
+            "id": "SponsorId",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                }
+            }
+        }
+    }
+}

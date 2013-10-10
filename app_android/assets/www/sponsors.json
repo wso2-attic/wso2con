@@ -1,0 +1,167 @@
+/*
+    {
+        id : "lorem",
+        name : "Lorem Ipsum",
+        description : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi posuere, tellus iaculis imperdiet consectetur, lacus dui pretium sapien, a cursus turpis nunc et neque. Ut consequat, orci sit amet scelerisque cursus, lacus tortor tempus velit, in gravida metus libero non nisl. Mauris quis nibh nibh, ut commodo augue.",
+        website: "http://wso2.com",
+        type : "gold",
+        level : 2,
+        logo : "ads/lorem-logo.png",
+        ads : [
+            {
+                level : 1,
+                image : "ads/ad320.png",
+                url : "#sponsor?id=lorem"
+            },
+            {
+                level : 2,
+                image : "ads/ad320.png",
+                url : "#sponsor?id=lorem"
+            }
+
+        ],
+        contacts: ["jonathan@wso2.com", "paul@wso2.com"]
+    },
+    {
+        id : "wso2",
+        name : "WSO2",
+        description : "<p style='text-align:center'><img src='ads/wso2-logo-400.jpg' style='width:90%'/></p><p>WSO2 offers a complete platform from data to screen, on-premise to cloud, line-of-business to bleeding edge.  Join the community of enterprises worldwide that have selected WSO2 as the modern platform of choice!</p>",
+        website: "http://wso2.com",
+        type : "gold",
+        level : 2,
+        logo : "ads/wso2-logo-280.jpg",
+        ads : [
+            {
+                level : 1,
+                image : "ads/ad-wso2-320.png",
+                image2x: "ads/ad-wso2-640.png",
+                url : "#sponsor?id=wso2"
+            }        ],
+        contacts: ["1HYF0MAO"]
+    }
+*/
+var basesponsors = [
+    {
+        id : "suse",
+        name : "SUSE",
+        description : "<p style='text-align:center'><img src='ads/suse-logo-large.jpg' style='width:90%; max-width:382px'/></p><p>SUSE&reg;, a pioneer in open source software, provides reliable, interoperable Linux and cloud infrastructure solutions that give enterprises greater control and flexibility. More than 20 years of engineering excellence, exceptional service and an unrivaled partner ecosystem power the products and support that help our customers manage complexity, reduce cost, and confidently deliver mission-critical services. The lasting relationships we build allow us to adapt and deliver the smarter innovation they need to succeed—today and tomorrow.</p><p>Visit us at <a href='http://suse.com'>suse.com</a>.",
+        website: "http://suse.com",
+        type : "gold",
+        level : 1,
+        logo : "ads/suse-logo.jpg",
+        ads : [
+            {
+                level : 1,
+                image : "ads/ad-suse-320-1.png",
+                image2x : "ads/ad-suse-640-1.png",
+                url : "#sponsor?id=suse"
+            }
+        ],
+        contacts: ["frego@novell.com"]
+    }
+    /*{
+        id : "yenlo",
+        name : "Yenlo BV",
+        description : "<div style='font-style:italic; font-size:small'><p style='text-align:center'><img src='ads/yenlo-logo.jpg'/></p><p>Yenlo is a company with high skilled certified consultants with over 10 years of experience in the SOA and ESB integration domain.  Yenlo is the number one WSO2 EMEA partner and developer of the ebMS adapter to enable federal governments, local governments and companies who want to do business with each other to securely exchange messaging over an ESB.</p><p>Integrating internal and external systems through the use of middleware is our world and we have been doing it for over 10 years.  Yenlo delivers QuickStarts, WSO2 implementation consultancy, production support and 24/7 Managed Services so that you can sleep at night while Yenlo monitors your business processes.</p><p>Get your WSO2 project started, integrated, managed and supported.  Concentrate on your company goals and let Yenlo take care of your WSO2 platform.  Visit us at <a href='http://www.yenlo.eu' target='_blank'>www.yenlo.eu</a>.</p></div>",
+        website: "http://yenlo.eu",
+        type : "gold",
+        level : 1,  // media = 3, silver = 2, gold = 1
+        logo : "ads/yenlo-logo.jpg",
+        ads : [
+            {
+                image : "ads/ad-yenlo-320-1.jpg",
+                image2x: "ads/ad-yenlo-640-1.jpg",
+                url : "http://www.yenlo.eu" 
+            },
+            { 
+                image : "ads/ad-yenlo-320-4.jpg",
+                image2x: "ads/ad-yenlo-640-4.jpg",
+                url : "#sponsor?id=yenlo"
+            },
+            { 
+                image : "ads/ad-yenlo-320-2.jpg",
+                image2x: "ads/ad-yenlo-640-2.jpg",
+                url : "http://www.yenlo.eu"
+            },
+            { 
+                image : "ads/ad-yenlo-320-3.jpg",
+                image2x: "ads/ad-yenlo-640-3.jpg",
+                url : "http://www.yenlo.eu"
+            },
+            {
+                image : "ads/ad-yenlo-320-5.jpg",
+                image2x: "ads/ad-yenlo-640-5.jpg",
+                url : "#sponsor?id=yenlo"
+            }
+        ],
+        contacts: ["E4NzfMAF", "IZUAZMA5"]
+    },
+    {
+        id : "gridsolut",
+        name : "GridSolut",
+        description : "<p style='text-align:center'><img src='ads/gridsolut-logo.png'/></p><p>Gridsolut is a German-based software development and consulting company focused on business applications. The company was founded in 2004 as a spin-off of the Fraunhofer IAO (www.iao.fraunhofer.de). The leaders of gridsolut were educated at the Institute of Architecture of Application Systems (IAAS) / University of Stuttgart, Germany (www.iaas.uni-stuttgart.de) and gained in-depth architectural knowledge in the area of service-oriented computing, business process management and cloud computing. Gridsolut offers its services throughout the German-speaking region (Germany, Switzerland, Lichtenstein, Austria).</p><p>Visit the website at <a href='http://gridsolut.de' target='_blank'>http://gridsolut.de</a>.</p>",
+        website: "http://gridsolut.de",
+        type : "silver",
+        level : 2,
+        logo : "ads/gridsolut-logo.png",
+        ads : [
+            {
+                level : 2,
+                image : "ads/ad-gridsolut-320.png",
+                image2x : "ads/ad-gridsolut-640.png",
+                url : "#sponsor?id=gridsolut"
+            }
+        ],
+        contacts: ["8ZvOPMA0"]
+    },
+    {
+        id : "redpill",
+        name : "Redpill-Linpro",
+        description : "<p><img src='ads/redpill-logo.jpg' style='text-align:center'/></p><p>Redpill Linpro is a professional provider of Open Source services and products. We provide consulting, development services, training, support and application management for many of the world’s leading Open Source software products.</p><p>We offer more than 50 standard courses including corresponding certification courses as well as customized training and are a dedicated training partner to WSO2 and other well-known Open Source software brands.</p><p>Visit us at <a href='http://redpill-linpro.com' target='_blank'>http://redpill-linpro.com</a>.</p>",
+        website: "http://redpill-linpro.com",
+        type : "silver",
+        level : 2,
+        logo : "ads/redpill-logo.jpg",
+        ads : [
+            { 
+                level : 2,
+                image : "ads/ad-redpill-320.jpg",
+                image2x : "ads/ad-redpill-640.jpg",
+                url : "#sponsor?id=redpill"
+            }
+        ],
+        contacts: ["JdBIDMA3"]
+    },
+    {
+        id : "wipro",
+        name : "Wipro Technologies",
+        description : "<p><img src='ads/wipro-logo.jpg' style='float:right'/>Wipro Technologies, the global IT business of Wipro Limited (NYSE:WIT) is a leading information technology, consulting and outsourcing company that delivers solutions to enable its clients to do business better. </p><p>Wipro offers Consulting, Implementation and Managed Services on Open Source Integration technologies. Wipro has delivered many transformational programs for its Fortune 500 customers using its deep industry knowledge, proven global delivery model and dedicated Open Source Center of Excellence (CoE). Wipro’s Open Source CoE focuses on proof of concept, innovative solution development, refining methodologies, reusable components on leading Open Source Middleware platforms like WSO2, Red Hat – JBoss/Fuse, MuleSoft.</p><p style='text-align:center'>Visit the website : <a href='www.wipro.com/integration' target='_blank'>www.wipro.com/integration</a><br>NYSE:WIT | OVER 135,000 EMPLOYEES | 54 COUNTRIES</p>",
+        website: "http://wipro.com",
+        type : "silver",
+        level : 2,
+        logo : "ads/wipro-logo.jpg",
+        ads : [
+            { 
+                level : 2,
+                image : "ads/ad-wipro-320-1.png",
+                image2x : "ads/ad-wipro-640-1.png",
+                url : "#sponsor?id=wipro"
+            },
+            { 
+                level : 2,
+                image : "ads/ad-wipro-320-2.png",
+                image2x : "ads/ad-wipro-640-2.png",
+                url : "#sponsor?id=wipro"
+            },
+            { 
+                level : 2,
+                image : "ads/ad-wipro-320-3.png",
+                image2x : "ads/ad-wipro-640-3.png",
+                url : "#sponsor?id=wipro"
+            }
+        ],
+        contacts: ["IVfDHMA1", "6tEa8MAE"]
+    }*/
+];
+
+

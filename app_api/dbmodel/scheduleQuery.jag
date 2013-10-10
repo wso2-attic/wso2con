@@ -1,0 +1,31 @@
+<%
+
+    include("../db.jag");
+
+    function getScheduleQuery(userId){
+       var result=db.query("SELECT session, attending, notes,contentrating,speakerrating,feedback FROM schedule WHERE user=?",userId);
+       return result;
+    }
+
+    function getUserSessionQuery(userId, sessionId){
+        var result=db.query("SELECT * FROM schedule WHERE user=? AND session=?",userId,sessionId);
+        return result;
+    }
+
+    function updateScheduleQuery(userId, sessionId,attending,notes,content_rating,speaker_rating,feedback){
+        db.query("UPDATE schedule SET attending=? ,notes=? , contentrating=? , speakerrating=? , feedback=? WHERE user=? AND session=?",attending,notes,content_rating,speaker_rating,feedback,userId,sessionId);
+    }
+
+    function addToScheduleQuery(userId, sessionId, attending, notes, contentRating, speakerRating, feedback){
+        db.query("INSERT INTO schedule values(?,?,?,?,?,?,?)",userId,sessionId,attending,notes,contentRating,speakerRating,feedback);
+    }
+
+    function commitQuery(){
+        //db.commit();
+    }
+
+    function rollbackQuery(){
+        //db.rollback();
+    }
+
+%>

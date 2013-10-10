@@ -1,0 +1,34 @@
+<%
+
+    include("../db.jag");
+
+    function getProfileQuery(id) {
+        var result = db.query("SELECT * FROM attendee WHERE id=?", id);
+        return result;
+    }
+
+    function getUserSessionsQuery(userId) {
+        var result = db.query("SELECT * FROM schedule WHERE user=?", userId);
+        return result;
+    }
+
+    function getFullAgenda(){
+        var result=db.query("SELECT agenda FROM agenda");
+        return result;
+    }
+
+    function getAvgContentRatingQuery(session_id){
+        var result=db.query("SELECT AVG(contentrating) FROM schedule WHERE session=? AND contentrating>0",session_id);
+        return result;
+    }
+
+    function getAvgSpeakerRatingQuery(session_id){
+        var result=db.query("SELECT AVG(speakerrating) FROM schedule WHERE session=? AND speakerrating>0",session_id);
+        return result;
+    }
+
+    function getUsersQuery() {
+        var result=db.query("SELECT id FROM `attendee`");
+        return result;
+    }
+%>

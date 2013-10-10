@@ -1,0 +1,311 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/session",
+    "apis": [
+        {
+            "path": "/api/session",
+            "description": "Operations about agenda",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "nickname": "addSession",
+                    "responseClass": "SessionId",
+                    "parameters": [
+                        {
+                            "name": "type",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "keynote",
+                                    "session",
+                                    "event",
+                                    "break",
+                                    "available"
+                                ]
+                            }
+                        },
+                        {
+                            "name": "title",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false
+                        },
+                        {
+                            "name": "speaker",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false,
+                            "description": "List of speakers in [speaker1,speaker2] format"
+                        },
+                        {
+                            "name": "abstract",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false
+                        },
+                        {
+                            "name": "start",
+                            "paramType": "query",
+                            "dataType": "Date",
+                            "required": true,
+                            "description": "Start time in yyyy-mm-dd hh:mm:ss format"
+                        },
+                        {
+                            "name": "end",
+                            "paramType": "query",
+                            "dataType": "Date",
+                            "required": true,
+                            "description": "End time in yyyy-mm-dd hh:mm:ss format"
+                        },
+                        {
+                            "name": "location",
+                            "paramType": "query",
+                            "dataType": "Int",
+                            "required": false
+                        },
+                        {
+                            "name": "feedback",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false
+                        }
+                    ],
+                    "summary": "Add a new session to agenda",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "Speaker not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/session/{id}",
+            "description": "Operations about agenda",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getSession",
+                    "responseClass": "Session",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "dataType": "Int",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Get session details",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "Session not found"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "PUT",
+                    "nickname": "updateSession",
+                    "responseClass": "SessionId",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "dataType": "Int",
+                            "required": true
+                        },
+                        {
+                            "name": "type",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": [
+                                    "keynote",
+                                    "session",
+                                    "event",
+                                    "break",
+                                    "available"
+                                ]
+                            }
+                        },
+                        {
+                            "name": "title",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": true
+                        },
+                        {
+                            "name": "speaker",
+                            "paramType": "query",
+                            "dataType": "Array[String]",
+                            "required": false,
+                            "description": "List of speakers in [speaker1,speaker2] format"
+                        },
+                        {
+                            "name": "abstract",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false
+                        },
+                        {
+                            "name": "start",
+                            "paramType": "query",
+                            "dataType": "Date",
+                            "required": true,
+                            "description": "Start time in yyyy-mm-dd hh:mm:ss format"
+                        },
+                        {
+                            "name": "end",
+                            "paramType": "query",
+                            "dataType": "Date",
+                            "required": true,
+                            "description": "End time in yyyy-mm-dd hh:mm:ss format"
+                        },
+                        {
+                            "name": "location",
+                            "paramType": "query",
+                            "dataType": "Int",
+                            "required": false
+                        },
+                        {
+                            "name": "feedback",
+                            "paramType": "query",
+                            "dataType": "String",
+                            "required": false
+                        }
+                    ],
+                    "summary": "Update the session",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "Session not found, Speaker not found"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "DELETE",
+                    "nickname": "deleteSession",
+                    "responseClass": "Session",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "description": "ID of the session to be deleted",
+                            "dataType": "Int",
+                            "required": true
+                        }
+                    ],
+                    "summary": "Delete session",
+                    "notes": "Delete a session from the agenda",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "Session not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/api/session/upnext",
+            "description": "Operations about agenda",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getUpNextSession",
+                    "responseClass": "List[Session]",
+                    "parameters": [
+                        {
+                            "name": "now",
+                            "paramType": "query",
+                            "dataType": "Date",
+                            "required": true,
+                            "description": "Current time"
+                        }
+                    ],
+                    "summary": "Get details of the next up sessions",
+                    "errorResponses": []
+                }
+            ]
+        },
+        {
+            "path": "/api/session/nowplaying",
+            "description": "Operations about agenda",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getNowPlayingSession",
+                    "responseClass": "List[Session]",
+                    "parameters": [
+                        {
+                            "name": "now",
+                            "paramType": "query",
+                            "dataType": "Date",
+                            "required": true,
+                            "description": "Current time"
+                        }
+                    ],
+                    "summary": "Get details of the current sessions",
+                    "errorResponses": []
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Session": {
+            "id": "Session",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                },
+                "type": {
+                    "type": "String",
+                    "allowableValues": {
+                        "valueType": "LIST",
+                        "values": [
+                            "keynote",
+                            "session",
+                            "event",
+                            "break",
+                            "available"
+                        ]
+                    }
+                },
+                "title": {
+                    "type": "String"
+                },
+                "speaker": {
+                    "type": "String"
+                },
+                "abstract": {
+                    "type": "String"
+                },
+                "start": {
+                    "type": "Date"
+                },
+                "end": {
+                    "type": "Date"
+                },
+                "location": {
+                    "type": "Int"
+                }
+            }
+        },
+        "SessionId": {
+            "id": "SessionId",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                }
+            }
+        }
+    }
+}

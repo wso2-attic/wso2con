@@ -1,0 +1,45 @@
+<% 
+	include("salesforcecredentials.jag");
+	
+	var ws = require('ws');
+	var salesforce = new ws.WSRequest();
+	
+	// declare the Salesforce typical namespaces
+	var ns = new Namespace("urn:enterprise.soap.sforce.com");
+	var sf = new Namespace("urn:sobject.enterprise.soap.sforce.com");
+	
+	// Login to salesforce.com, set up session, url, and options for subsequent calls
+	function salesforceLogin() {
+		try {
+			// URL from the enterprise WSDL generated for us by Salesforce.com
+			var options = new Array();
+			options.useSOAP = 1.1;
+			salesforce.open(options, salesforce_url, false);
+			salesforce.send(
+				<tns:login xmlns:tns="urn:enterprise.soap.sforce.com">
+					<username>{salesforce_username}</username>
+					<password>{salesforce_password}{salesforce_security_token}</password>
+				</tns:login>
+			);
+			var loginResponse = salesforce.responseE4X;
+	
+			var sessionId = loginResponse.ns::result.ns::sessionId.toString();
+			var serverUrl = loginResponse.ns::result.ns::serverUrl.toString();
+			options.SOAPHeaders = [
+               <tns:SessionHeader xmlns:tns="urn:enterprise.soap.sforce.com">
+               		<sessionId>{sessionId}</sessionId>
+			   </tns:SessionHeader>
+            ];
+			
+			return {
+				sessionId : sessionId,
+				serverUrl : serverUrl,
+				options : options   	
+			}
+			
+		} catch (e) {
+			return {error: e};
+		}
+	}
+
+ %> 

@@ -1,0 +1,46 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/location/<id>",
+    "apis": [
+        {
+            "path": "/api/location",
+            "description": "Gets all the available locations.",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getAllLocations",
+                    "responseClass": "List[Location]",
+                    "parameters": [],
+                    "summary": "Get all locations",
+                    "errorResponses": []
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Location": {
+            "id": "Location",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                },
+                "name": {
+                    "type": "String"
+                },
+                "coords": {
+                    "type": "String"
+                }
+            }
+        },
+        "LocationId": {
+            "id": "LocationId",
+            "properties": {
+                "id": {
+                    "type": "Int"
+                }
+            }
+        }
+    }
+}

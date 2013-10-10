@@ -1,0 +1,49 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/<id>/rating",
+    "apis": [
+        {
+            "path": "/api/{id}/rating",
+            "description": "Operations about average session ratings",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getRating",
+                    "responseClass": "Rating",
+                    "summary": "Get average rating for the given session",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "paramType": "path",
+                            "dataType": "int",
+                            "required": true,
+                            "description": "Session id code."
+                        }
+                    ],
+                    "notes": "Average rating is a float point value from 0 to 5",
+                    "errorResponses": [
+                        {
+                            "code": 404,
+                            "reason": "Session not found"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Rating": {
+            "id": "Rating",
+            "properties": {
+                "contentrating": {
+                    "type": "float"
+                },
+                "speakerrating ": {
+                    "type": "float"
+                }
+            }
+        }
+    }
+}

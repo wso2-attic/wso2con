@@ -1,0 +1,29 @@
+<%
+    include("../db.jag");
+
+    function getEntryQuery(user_id){
+        var result=db.query("SELECT otid FROM settings WHERE user=?",user_id);
+        return result;
+    }
+
+    function addEntryQuery(user_id, ot_id){
+        db.query("INSERT INTO settings VALUES(?,?)",user_id, ot_id);
+    }
+
+    function updateEntryQuery(user_id, ot_id){
+        db.query("UPDATE settings SET otid=? WHERE user=?", ot_id, user_id);
+    }
+
+    function deleteEntryQuery(user_id){
+        db.query("DELETE FROM settings WHERE user=?",user_id);
+    }
+
+    function commitQuery(){
+        //db.commit();
+    }
+
+    function rollbackQuery(){
+        //db.rollback();
+    }
+
+%>

@@ -1,0 +1,39 @@
+<%
+
+    include("../logic/sponsorLogic.jag");
+
+    var verb = request.getMethod();
+    var id = request.getParameter('id');
+    var level = request.getParameter('level');
+    var organisation = request.getParameter('organisation');
+    var description = request.getParameter('description');
+    var url = request.getParameter('url');
+    var logo = request.getParameter('logo');
+    var small_ad = request.getParameter('smallad');
+    var large_ad = request.getParameter('largead');
+    var contacts = request.getParameter('contacts');
+    var reps = request.getParameter('reps');
+
+    var uri = request.getPathInfo();
+    if(uri != null) {
+    var uriMatcher = new URIMatcher(uri);
+        if(uriMatcher.match("/{page}/{id}")){
+            id=uriMatcher.elements().id;
+        }
+    }
+
+    if(verb=="GET" && id=="splashscreenlogo"){
+        getSplashScreenLogo();
+    }else if(verb=="GET" && id=="ads"){
+        getSponsorAds();
+    }else if(verb=="GET"){
+        getSponsors();
+    }else if(verb=="POST" && id==null){
+        addSponsor(level,organisation,description,url,logo,small_ad,large_ad,reps,contacts);
+    }else if(verb=="PUT" && id!=null){
+        updateSponsor(id,level,organisation,description,url,logo,small_ad,large_ad,reps,contacts);
+    }else if(verb=="DELETE"){
+        deleteSponsor(id);
+    }
+
+%>

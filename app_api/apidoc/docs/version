@@ -1,0 +1,23 @@
+{
+    "apiVersion": 0.1,
+    "swaggerVersion": 1.1,
+    "basePath": "..",
+    "resourcePath": "/api/versions",
+    "apis": [
+        {
+            "path": "/api/versions",
+            "description": "Get All versions",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "getversions",
+                    "responseClass": "void",
+                    "parameters": [],
+                    "summary": "Get the complete schedule",
+                    "notes": "Details of each session will be given ",
+                    "errorResponses": []
+                }
+            ]
+        }
+    ]
+}

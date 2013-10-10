@@ -1,0 +1,49 @@
+<%
+    include("../dbmodel/settingsQuery.jag");
+    include("../dbmodel/attendeeQuery.jag");
+
+    function getEntry(userId){
+        var user=getEntryQuery(userId);
+        var stringUser=stringify(user);
+        if(stringUser!="[]"){
+            print(user);
+        }else{
+            response.sendError(404);
+        }
+    }
+
+    function addEntry(user, otId){
+        var userId=getProfileQuery(user);
+        var stringUser=stringify(userId);
+        if(stringUser!="[]"){
+            addEntryQuery(user, otId);
+            commitQuery();
+        }else{
+            response.sendError(404);
+        }
+    }
+
+    function updateEntry(userId,otId){
+        var user=getEntryQuery(userId);
+        var stringUser=stringify(user);
+        if(stringUser!="[]"){
+            updateEntryQuery(userId, otId);
+            commitQuery();
+        }else{
+            response.sendError(404);
+        }
+    }
+
+    function deleteEntry(userId){
+        var user=getEntryQuery(userId);
+        var stringUser=stringify(user);
+        if(stringUser!="[]"){
+            deleteEntryQuery(userId);
+            commitQuery();
+        }else{
+            response.sendError(404);
+        }
+    }
+
+
+%>

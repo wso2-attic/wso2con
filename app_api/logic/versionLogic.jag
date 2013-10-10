@@ -1,0 +1,8 @@
+<%
+include("../dbmodel/versionQuery.jag");
+
+function getVersions() {
+    print(getVersionsQuery()[0].versions);
+}
+
+%>

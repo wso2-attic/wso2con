@@ -1,0 +1,8 @@
+<%
+include("../db.jag");
+
+function getVersionsQuery(){
+    var result=db.query("SELECT versions FROM version");
+    return result;
+}
+%>

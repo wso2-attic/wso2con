@@ -1,0 +1,67 @@
+<%
+var l = new Log();
+
+response.contentType = 'application/json';
+var verb = request.getMethod();
+var param1 = request.getParameter('param1');
+var param2 = request.getParameter('param2');
+var param3 = request.getParameter('param3');
+
+var uri = request.getPathInfo();
+if (uri != null) {
+    var uriMatcher = new URIMatcher(uri);
+
+    if (uriMatcher.match("/{param1}")) {
+        param1 = uriMatcher.elements().param1;
+    }
+    if (uriMatcher.match("/{param1}/{param2}")) {
+        param1 = uriMatcher.elements().param1;
+        param2 = uriMatcher.elements().param2;
+    }
+    if (uriMatcher.match("/{param1}/{param2}/{param3}")) {
+        param1 = uriMatcher.elements().param1;
+        param2 = uriMatcher.elements().param2;
+        param3 = uriMatcher.elements().param3;
+    }
+
+    if (uriMatcher.match("/{param1}/{param2}/{param3}/{param4}")) {
+        param1 = uriMatcher.elements().param1;
+        param2 = uriMatcher.elements().param2;
+        param3 = uriMatcher.elements().param3;
+    }
+}
+
+if (param1 == "agenda" && param2 == null && param3 == null) {
+    include("agenda.jag");
+} else if (param2 == "rating" && param2 != null && param3 == null) {
+    include("rating.jag");
+} else if (param2 == "schedule" && param1 != null && param3 == null) {
+    include("schedule.jag");
+} else if (param2 == "availability" && param1 != null) {
+    include("availability.jag");
+} else if (param2 == "meeting" && param1 != null) {
+    include("meeting.jag");
+} else if (param2 == "notifications" && param1 != null && param3 == null) {
+    include("notifications.jag");
+} else if (param1 == "search" && param2 == null && param3 == null) {
+    include("search.jag");
+} else if (param1 == "sponsors" && param3 == null) {
+    include("sponsor.jag");
+} else if (param1 == "location" && param3 == null) {
+    include("location.jag");
+} else if (param1 == "session" && param3 == null) {
+    include("session.jag");
+} else if (param1 == "attendee" && param3 == null) {
+    include("user.jag");
+} else if (param1 == "settings" && param3 == null) {
+    include("settings.jag");
+} else if (param1 == "login") {
+    include("login.jag");
+} else if (param1 == "message" || param2 == "message") {
+    include("message.jag");
+} else if (param1 == "versions") {
+    include("version.jag");
+}
+
+
+%>

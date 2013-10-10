@@ -1,0 +1,18 @@
+<%
+    include("../logic/sessionLogic.jag");
+
+    var verb = request.getMethod();
+    var id = request.getParameter('id');
+
+    var uri = request.getPathInfo();
+    if (uri != null) {
+        var uriMatcher = new URIMatcher(uri);
+        if (uriMatcher.match("/{id}/rating")) {
+            id = uriMatcher.elements().id;
+        }
+    }
+
+    if(verb=="GET"){
+        getAvarageRating(id);
+    }
+%>

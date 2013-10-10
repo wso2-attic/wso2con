@@ -1,0 +1,87 @@
+<%
+var mus = require('lib/mustache.js').Mustache;
+
+function getSummary(testMode,userId){
+    var profile = null;
+    if(testMode){
+        profile = true;
+    }else{
+        profile = getProfileQuery(userId);
+        profile = profile ? profile[0] : null;
+    }
+    if(profile){
+        var sessions;
+        if(testMode){
+            profile = {"regcode" : "null", "bio" : "", "organisation" : "WSO2", "title" : "tester", "home" : "testland", "email" : "test@wso2.com", "lastname" : "Testname", "firstname" : "Tester", "expertise" : "", "id" : "testId", "accepting" : 1, "interests" : ""} ;
+            sessions = [{"attending" : "yes", "session" : "keynote2", "speakerrating" : 4, "notes" : "my notes on Democratizing Innovation.", "contentrating" : 3, "user" : "testId", "feedback" : "oh well"}, {"attending" : "yes", "session" : "t1t01a", "speakerrating" : 4, "notes" : "WSO2 ESB is the best.", "contentrating" : 5, "user" : "testId", "feedback" : ""}, {"attending" : "yes", "session" : "t1t02a", "speakerrating" : 3, "notes" : "this is a sample text", "contentrating" : 4, "user" : "testId", "feedback" : ""}, {"attending" : "yes", "session" : "t2s01", "speakerrating" : 0, "notes" : "", "contentrating" : 0, "user" : "testId", "feedback" : ""}] ;
+        }else{
+            sessions = getUserSessionsQuery(userId);
+        }
+        var agenda = parse(getFullAgenda()[0]["agenda"])['sessions'];
+        var agendaByName = {};
+
+        var length = agenda.length;
+        for (var i = 0; i < length; i++) {
+            agendaByName[agenda[i].id] = agenda[i];
+        }
+
+        length = sessions.length;
+        var mySessions = [];
+        for (var i = 0; i < length; i++) {
+            var currentSession = sessions[i];
+
+            currentSession.info = agendaByName[sessions[i].session];
+            if(currentSession.info){
+
+                if (currentSession.speakerrating == 0) {
+                    currentSession.speakerrating = '-';
+                }
+
+                if (currentSession.contentrating == 0) {
+                    currentSession.contentrating = '-';
+                }
+
+                if (!currentSession.feedback) {
+                    currentSession.feedback = '-';
+                }
+
+                if (!currentSession.notes) {
+                    currentSession.notes = '-';
+                }
+
+                var contentRating = getAvgContentRatingQuery(sessions[i].session)[0]['AVG(contentrating)'];
+                sessions[i].info.contentrating = Math.round(contentRating);
+
+                var speakerRating = getAvgSpeakerRatingQuery(sessions[i].session)[0]['AVG(speakerrating)'];
+                sessions[i].info.speakerrating = Math.round(speakerRating);
+
+                mySessions.push(currentSession);
+            }
+
+        }
+        if(mySessions.length>0){
+            mySessions.sort(function (a, b) {
+                var a = a.info ? new Date(a.info.start).valueOf() : 0;
+                var b = b.info ? new Date(b.info.start).valueOf() : 0;
+                return a - b;
+            });
+
+            var view = {
+                profile: profile,
+                sessions:mySessions
+            };
+
+
+            var templateFile = new File("template.mustache");
+            templateFile.open("r");
+
+            var output = mus.render(templateFile.readAll(), view);
+            return({text:output,to:profile.email});
+        }else{
+            return null;
+        }
+    }else{
+        return null;
+    }
+}
+%>

@@ -1,0 +1,61 @@
+<%
+
+    include("../dbmodel/attendeeQuery.jag");
+
+    function trim(s){
+        return s.replace(/^\s+|\s+$/g, '');
+    };
+
+    function searchUsers(name,organisation,expertise,home,interests){
+
+        name = trim(name);
+        organisation = trim(organisation);
+        expertise = trim(expertise);
+        home = trim(home);
+        interests = trim(interests);
+
+        if(name=="*"){
+            name="";
+        }
+        if(organisation=="*"){
+            organisation="";
+        }
+        if(expertise=="*"){
+            expertise="";
+        }
+        if(home=="*"){
+            home="";
+        }
+        if(interests=="*"){
+            interests="";
+        }
+        if(regcode=="*"){
+            regcode="";
+        }
+        var nameQ='\%'+name+'\%';
+        var organisationQ='\%'+organisation+'\%';
+        var expertiseQ='\%'+expertise+'\%';
+        var homeQ='\%'+home+'\%';
+        var interestsQ='\%'+interests+'\%';
+        var regcodeQ='\%'+regcode+'\%';
+        var users=searchUsersQuery(nameQ,organisationQ,expertiseQ,homeQ,interestsQ,regcodeQ);
+        //var userString=stringify(users);
+
+	var newArr = [];
+	for (var i = 0; i < users.length; i++) {
+	    var obj = users[i];
+	    var newObj = {};
+	    for (var j in obj) {
+		newObj[j.toLowerCase()] = obj[j]
+	    }
+	    newArr.push(newObj);
+	}
+
+        var result={"users": newArr};
+
+        print(result);
+    }
+
+
+
+%>

@@ -1,0 +1,26 @@
+<%
+    include("../logic/settingLogic.jag");
+
+    var verb = request.getMethod();
+    var user = request.getParameter('user');
+    var otid = request.getParameter('otid');
+
+    var uri = request.getPathInfo();
+    if(uri != null) {
+    var uriMatcher = new URIMatcher(uri);
+        if(uriMatcher.match("/{page}/{user}")){
+            user=uriMatcher.elements().user;
+        }
+    }
+
+    if(verb=="GET"){
+        getEntry(user);
+    }else if(verb=="PUT"){
+        updateEntry(user, otid);
+    }else if(verb=="POST"){
+        addEntry(user, otid);
+    }else if(verb=="DELETE"){
+        deleteEntry(user);
+    }
+
+%>

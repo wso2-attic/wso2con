@@ -1,0 +1,39 @@
+<%
+/*
+    include("query.jag");
+    include("summaryGen.jag");
+
+    var testMode = false;
+    var userId = null;
+    var uriMatcher = new URIMatcher(request.getPathInfo());
+    if (uriMatcher.match("/{userId}")) {
+        userId = uriMatcher.elements().userId;
+    }
+    var summary = getSummary(testMode,userId);
+    print(summary.text);
+
+ */
+
+    include("query.jag");
+    include("summaryGen.jag");
+    var email = require('email');
+    var sender = new email.Sender("tygra.wso2.com", "25", "wso2con", "XTwMOTllWubaU");
+
+    var users = getUsersQuery();
+
+    for (var i = 0; i < users.length; i++) {
+        var id = users[i].id;
+
+        var userId = id;
+        var summary = getSummary(false,userId);
+
+        if(summary!=null){
+            sender.from = "mail@wso2con.com";
+            sender.to = 'manu@wso2.com';//; summary.to;
+            sender.subject = 'WSO2Con 2013 - Personal Summary';
+            sender.html = summary.text;
+            //sender.send();
+            print("email successfully sent to " + summary.to + '<br/>');
+        }
+    }
+%>

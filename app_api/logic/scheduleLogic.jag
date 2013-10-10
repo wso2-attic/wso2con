@@ -1,0 +1,56 @@
+<%
+
+include("../dbmodel/scheduleQuery.jag");
+include("../dbmodel/attendeeQuery.jag");
+include("../dbmodel/sessionQuery.jag");
+include("availabilityLogic.jag");
+
+function getSchedule(userId) {
+    var result = getScheduleQuery(userId);
+    var resultString = stringify(result);
+    if (resultString != "[]") {
+        var finalString = '{"user":' + userId + ', "sessions":' + resultString.toLowerCase() + '}';
+        print(parse(finalString));
+    } else {
+        var user = getProfileQuery(userId);
+        var stringUser = stringify(user);
+        if (stringUser == "[]") {
+            response.sendError(404);
+        } else {
+            var finalString = '{"user":' + userId + ', "sessions":[]}';
+            print(parse(finalString));
+        }
+    }
+
+}
+
+function updateSchedule(userId, sessionId, attending, notes, content_rating, speaker_rating, feedback) {
+    if (userId == null || sessionId == null) {
+        response.sendError(404);
+        return;
+    }
+    var result = getUserSessionQuery(userId, sessionId);
+    var stringResult = stringify(result);
+    if (stringResult != "[]") {
+        updateScheduleQuery(userId, sessionId, attending, notes, content_rating, speaker_rating, feedback);
+        commitQuery();
+    } else {
+        response.sendError(404);
+    }
+}
+
+function addToSchedule(userId, sessionId, attending, notes, content_rating, speaker_rating, feedback) {
+    if (userId == null || sessionId == null) {
+        response.sendError(404);
+        return;
+    }
+    var user = getProfileQuery(userId);
+    var stringUser = stringify(user);
+    if (stringUser != "[]") {
+        addToScheduleQuery(userId, sessionId, attending, notes, content_rating, speaker_rating, feedback);
+    } else {
+        response.sendError(404);
+    }
+}
+
+%>
